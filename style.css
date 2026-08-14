@@ -1,4 +1,140 @@
-* { 
-    padding: 0; margin: 0;
+* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
+}
+.flex {
+    display: flex; gap: 1em;
+    align-items: center;
+    justify-content: center;
+}
+.flex-column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.galery {
+    width: 100%;
+    height: auto;
+    padding: 4em;
+    background-color: #0A0A0A;
+}
+.home {
+    width: 100%;
+    height: 100svh;
+    color: #A0A0A0;
+    background-color: #0A0A0A;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    display: grid;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: 10vh 80vh 10vh;
+    grid-template-areas:
+        "header header"
+        "main   aside"
+        "footer aside";
+}
+h1 {
+
+}
+h2 {
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-align: right;
+}
+h3 {
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+h4 {
+    font-size: 0.8rem;
+    font-weight: 200;
+    font-style: italic;
+    color: #4A4A4A;
+}
+p {
+    font-size: 0.8rem;
+}
+a {
+    text-decoration: none;
+    color: #A0A0A0;
+}
+button {
+    border: none;
+    font-size: 0.8rem;
+    text-align: start;
+    background: none;
+    color: #A0A0A0;
+}
+img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+header {
+    grid-area: header;
+    padding: 0em 1em;
+    border-bottom: 1px solid #1A1A1A;
+    display: flex; gap: 1em;
+    align-items: center;
+    justify-content: space-between;
+}
+nav {
+    padding: 1em;
+}
+nav ul {
+    width: 100%;
+    display: flex; gap: 1em;
+    justify-content: space-between;
+}
+nav ul li {
+    list-style-type: none;
+}
+main {
+    grid-area: main;
+    padding: 1em;
+}
+section {
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+    border-radius: 1em;
+    border: 1px solid #1A1A1A;
+}
+/* ----- ASIDE ----- */
+aside {
+    grid-area: aside;
+    padding: 1em;
+    border-left: 1px solid #1A1A1A;
+    overflow-y: auto;
+}
+article {
+    width: 100%;
+    padding: 1em;
+    border-bottom: 1px solid #1A1A1A;
+}
+/* ----- FOOTER ----- */
+footer {
+    grid-area: footer;
+    border-top: 1px solid #1A1A1A;
+}
+
+
+
+
+.project-preview {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 0.8em;
+    border: 1px solid #1A1A1A;
+}
+
+.project-preview iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
 }

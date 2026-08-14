@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Series y proyectos fotográficos de Fernando Arrigorriaga.">
+  <title>Proyectos | Fernando Arrigorriaga</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+  <!-- SEO básico -->
+<meta name="author" content="Fernando Arrigorriaga">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph (Facebook, LinkedIn, etc.) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Fernando Arrigorriaga | Fotógrafo de Naturaleza">
+<meta property="og:description" content="Fotógrafo de naturaleza especializado en aves. Imágenes 100% reales.">
+<meta property="og:image" content="https://tu-dominio.com/images/og-image.jpg">
+<meta property="og:url" content="https://tu-dominio.com">
+<meta property="og:site_name" content="Fernando Arrigorriaga">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fernando Arrigorriaga | Fotógrafo de Naturaleza">
+<meta name="twitter:description" content="Fotógrafo de naturaleza especializado en aves. Imágenes 100% reales.">
+<meta name="twitter:image" content="https://tu-dominio.com/images/og-image.jpg">
+
+<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="css/styles.css">
+  
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header class="header" id="header">
+    <div class="container header__container">
+      <a href="index.html" class="logo">Fernando Arrigorriaga</a>
+
+      <nav class="nav" id="nav">
+        <ul class="nav__list">
+          <li class="nav__item"><a href="index.html" class="nav__link">Inicio</a></li>
+          <li class="nav__item"><a href="galeria.html" class="nav__link">Galería</a></li>
+          <li class="nav__item"><a href="sobre-mi.html" class="nav__link">Sobre mí</a></li>
+          <li class="nav__item"><a href="proyectos.html" class="nav__link active">Proyectos</a></li>
+          <li class="nav__item"><a href="contacto.html" class="nav__link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú">
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ========== MAIN ========== -->
+  <main>
+    <section class="projects section">
+      <div class="container">
+
+        <h1 class="section__title">Proyectos</h1>
+
+        <p class="projects__intro">
+          Una selección de series fotográficas centradas en el comportamiento, 
+          la belleza y la diversidad de las aves.
+        </p>
+
+        <div class="projects__list">
+
+          <!-- Proyecto 1 -->
+          <article class="project-card">
+            <div class="project-card__image">
+              <img src="images/projects/proyecto-1.png" alt="Serie Royal Flycatcher" loading="lazy">
+            </div>
+            <div class="project-card__content">
+              <span class="project-card__tag">Serie</span>
+              <h2 class="project-card__title">Royal Flycatcher</h2>
+              <p class="project-card__text">
+                Una exploración del comportamiento y la espectacular cresta 
+                de esta especie. Horas de espera para capturar el momento exacto 
+                en que despliega su corona.
+              </p>
+              <a href="galeria.html" class="btn btn--secondary">Ver serie</a>
+            </div>
+          </article>
+
+          <!-- Proyecto 2 -->
+          <article class="project-card project-card--reverse">
+            <div class="project-card__image">
+              <img src="images/projects/proyecto-2.png" alt="Serie Aves del Chocó" loading="lazy">
+            </div>
+            <div class="project-card__content">
+              <span class="project-card__tag">Expedición</span>
+              <h2 class="project-card__title">Aves del Chocó</h2>
+              <p class="project-card__text">
+                Registro de la extraordinaria biodiversidad del Chocó ecuatoriano. 
+                Una de las regiones con mayor concentración de especies de aves 
+                en el planeta.
+              </p>
+              <a href="galeria.html" class="btn btn--secondary">Ver serie</a>
+            </div>
+          </article>
+
+          <!-- Proyecto 3 -->
+          <article class="project-card">
+            <div class="project-card__image">
+              <img src="images/projects/proyecto-3.png" alt="Serie Momentos de afecto" loading="lazy">
+            </div>
+            <div class="project-card__content">
+              <span class="project-card__tag">Comportamiento</span>
+              <h2 class="project-card__title">Momentos de afecto</h2>
+              <p class="project-card__text">
+                Instantes íntimos entre parejas de aves. Caricias, cuidados 
+                mutuos y lazos sociales capturados en su hábitat natural.
+              </p>
+              <a href="galeria.html" class="btn btn--secondary">Ver serie</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container footer__container">
+      <a href="index.html" class="footer__logo">Fernando Arrigorriaga</a>
+      <div class="footer__social">
+        <a href="https://www.instagram.com/ferarrigophoto/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </div>
+      <p class="footer__copy">
+        &copy; <span id="year"></span> Fernando Arrigorriaga. Todos los derechos reservados.
+      </p>
+            <p class="footer__credit" style="font-size: 0.75rem; color: #555; margin-top: 0.8rem;">
+  Diseño y desarrollo por Gil Leal Maikol
+</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

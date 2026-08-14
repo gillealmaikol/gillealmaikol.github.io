@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Conoce a Fernando Arrigorriaga, fotógrafo de naturaleza especializado en aves.">
+  <title>Sobre mí | Fernando Arrigorriaga</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+  <!-- SEO básico -->
+<meta name="author" content="Fernando Arrigorriaga">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph (Facebook, LinkedIn, etc.) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Fernando Arrigorriaga | Fotógrafo de Naturaleza">
+<meta property="og:description" content="Fotógrafo de naturaleza especializado en aves. Imágenes 100% reales.">
+<meta property="og:image" content="https://tu-dominio.com/images/og-image.jpg">
+<meta property="og:url" content="https://tu-dominio.com">
+<meta property="og:site_name" content="Fernando Arrigorriaga">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fernando Arrigorriaga | Fotógrafo de Naturaleza">
+<meta name="twitter:description" content="Fotógrafo de naturaleza especializado en aves. Imágenes 100% reales.">
+<meta name="twitter:image" content="https://tu-dominio.com/images/og-image.jpg">
+
+<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header class="header" id="header">
+    <div class="container header__container">
+      <a href="index.html" class="logo">Fernando Arrigorriaga</a>
+
+      <nav class="nav" id="nav">
+        <ul class="nav__list">
+          <li class="nav__item"><a href="index.html" class="nav__link">Inicio</a></li>
+          <li class="nav__item"><a href="galeria.html" class="nav__link">Galería</a></li>
+          <li class="nav__item"><a href="sobre-mi.html" class="nav__link active">Sobre mí</a></li>
+          <li class="nav__item"><a href="proyectos.html" class="nav__link">Proyectos</a></li>
+          <li class="nav__item"><a href="contacto.html" class="nav__link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú">
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ========== MAIN ========== -->
+  <main>
+    <section class="about section">
+      <div class="container">
+
+        <h1 class="section__title">Sobre mí</h1>
+
+        <div class="about__content">
+          <!-- Foto -->
+          <div class="about__image">
+            <img src="images/fernando-perfil.jpg" alt="Fernando Arrigorriaga, fotógrafo de naturaleza" loading="lazy">
+          </div>
+
+          <!-- Texto -->
+          <div class="about__text">
+            <p>
+              Soy Fernando Arrigorriaga, fotógrafo de naturaleza especializado en aves. 
+              Mi trabajo se centra en capturar momentos reales y únicos de la vida silvestre, 
+              especialmente en los bosques y reservas de Ecuador.
+            </p>
+            <p>
+              Cada imagen es el resultado de horas de observación, paciencia y profundo respeto 
+              por los animales y su entorno. No utilizo inteligencia artificial: todas las 
+              fotografías son 100% reales y tomadas en su hábitat natural.
+            </p>
+            <p>
+              A través de mi lente busco mostrar la belleza, el comportamiento y la fragilidad 
+              de las aves, invitando a quienes observan mis imágenes a conectar con la naturaleza 
+              de una forma más consciente.
+            </p>
+          </div>
+        </div>
+
+        <!-- Valores / Filosofía -->
+        <div class="about__values">
+          <article class="value-card">
+            <h3 class="value-card__title">Paciencia</h3>
+            <p class="value-card__text">
+              Esperar el momento preciso es parte esencial del proceso. 
+              La naturaleza no se apura, y yo tampoco.
+            </p>
+          </article>
+
+          <article class="value-card">
+            <h3 class="value-card__title">Respeto</h3>
+            <p class="value-card__text">
+              Nunca interferir. Observar desde la distancia y priorizar 
+              siempre el bienestar del animal.
+            </p>
+          </article>
+
+          <article class="value-card">
+            <h3 class="value-card__title">Observación</h3>
+            <p class="value-card__text">
+              Entender el comportamiento de cada especie permite 
+              anticipar y capturar instantes verdaderos.
+            </p>
+          </article>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container footer__container">
+      <a href="index.html" class="footer__logo">Fernando Arrigorriaga</a>
+      <div class="footer__social">
+        <a href="https://www.instagram.com/ferarrigophoto/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </div>
+      <p class="footer__copy">
+        &copy; <span id="year"></span> Fernando Arrigorriaga. Todos los derechos reservados.
+      </p>
+            <p class="footer__credit" style="font-size: 0.75rem; color: #555; margin-top: 0.8rem;">
+  Diseño y desarrollo por Gil Leal Maikol
+</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
