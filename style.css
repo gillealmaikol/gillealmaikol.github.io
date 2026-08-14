@@ -117,10 +117,11 @@ section {
 iframe {
     width: 100%;
     height: 100%;
+    border: none;
+    display: block;
+    overflow: hidden;
     border-radius: 0.8em;
     border: 1px solid #1A1A1A;
-    overflow: hidden;
-    display: block;
 }
 /* ----- ASIDE ----- */
 aside {
