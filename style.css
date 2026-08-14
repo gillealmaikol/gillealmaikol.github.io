@@ -1,3 +1,15 @@
+@font-face {
+    font-family: "Roboto";
+    src: url("/FONTS/Roboto/Roboto-VariableFont_wdth\,wght.ttf") format("woff2");
+}
+@font-face {
+    font-family: "Roboto Mono";
+    src: url("/FONTS/Roboto_Mono/RobotoMono-VariableFont_wght.ttf") format("woff2");
+}
+:root {
+    --color-bg: #0A0A0A;
+    --color-text: #A0A0A0;
+}
 * {
     margin: 0;
     padding: 0;
@@ -14,18 +26,15 @@
     justify-content: center;
     flex-direction: column;
 }
-.galery {
-    width: 100%;
-    height: auto;
-    padding: 4em;
-    background-color: #0A0A0A;
+body {
+    line-height: 1.4;
+    font-family: "Roboto", sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
 }
 .home {
     width: 100%;
     height: 100svh;
-    color: #A0A0A0;
-    background-color: #0A0A0A;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     display: grid;
     grid-template-columns: 70% 30%;
     grid-template-rows: 10vh 80vh 10vh;
@@ -35,16 +44,18 @@
         "footer aside";
 }
 h1 {
-
+    font-size: 1rem;
+    font-weight: 400;
 }
 h2 {
     font-size: 0.6rem;
     font-weight: 400;
     letter-spacing: 0.2em;
+    font-family: 'Roboto Mono', sans-serif;
     text-align: right;
 }
 h3 {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     font-weight: 400;
 }
 h4 {
@@ -103,6 +114,14 @@ section {
     border-radius: 1em;
     border: 1px solid #1A1A1A;
 }
+iframe {
+    width: 100%;
+    height: 100%;
+    border-radius: 0.8em;
+    border: 1px solid #1A1A1A;
+    overflow: hidden;
+    display: block;
+}
 /* ----- ASIDE ----- */
 aside {
     grid-area: aside;
@@ -126,18 +145,3 @@ footer {
 }
 
 
-
-.project-preview {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    border-radius: 0.8em;
-    border: 1px solid #1A1A1A;
-}
-
-.project-preview iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    display: block;
-}
