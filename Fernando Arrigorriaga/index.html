@@ -44,7 +44,7 @@
     <div class="container header__container">
       <a href="index.html" class="logo">
         Fernando Arrigorriaga
-      </a>
+</a>
 
       <nav class="nav" id="nav">
         <ul class="nav__list">
@@ -133,13 +133,13 @@
     </section>
 
     <!-- ===== FRASE / FILOSOFÍA ===== -->
-    <section class="quote section">
-      <div class="container">
-        <blockquote class="quote__text">
-          “Imágenes 100% reales. Paciencia, respeto y observación.”
-        </blockquote>
-      </div>
-    </section>
+<section class="quote section">
+  <div class="container">
+    <blockquote class="quote__text">
+      “Imágenes 100% reales. Paciencia, respeto y observación.”
+    </blockquote>
+  </div>
+</section>
 
   </main>
 
@@ -166,5 +166,20 @@
 
   <!-- JavaScript -->
   <script src="js/main.js"></script>
+  <script>
+const quote = document.querySelector('.quote');
+
+window.addEventListener('scroll', () => {
+    const rect = quote.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    if (rect.bottom > 0 && rect.top < windowHeight) {
+        const progress = (windowHeight - rect.top) / (windowHeight + rect.height);
+        const movement = (progress - 0.5) * 240;
+
+        quote.style.setProperty('--parallax', `${movement}px`);
+    }
+});
+</script>
 </body>
 </html>
