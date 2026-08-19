@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Core_VoxelGrid_v7 — Quantum Voxel Matrix</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #0A0A0A;
+        }
+        #voxel-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="voxel-canvas"></canvas>
+
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+      }
+    }
+    </script>
+
+    <script type="module">
+      import * as THREE from 'three';
+
+      // ====================== NOISE (Perlin 3D Clásico) ======================
+      function fade(t) { return t * t * t * (t * (t * 6 - 15) + 10); }
+      function lerp(a, b, t) { return a + t * (b - a); }
+      function grad(hash, x, y, z) {
+        const h = hash & 15;
+        const u = h < 8 ? x : y;
+        const v = h < 4 ? y : h === 12 || h === 14 ? x : z;
+        return ((h & 1) === 0 ? u : -u) + ((h & 2) === 0 ? v : -v);
+      }
+      const perm = new Uint8Array(512);
+      const p = new Uint8Array(256);
+      for (let i = 0; i < 256; i++) p[i] = i;
+      for (let i = 255; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [p[i], p[j]] = [p[j], p[i]];
+      }
+      for (let i = 0; i < 512; i++) perm[i] = p[i & 255];
+
+      function noise3D(x, y, z) {
+        const X = Math.floor(x) & 255, Y = Math.floor(y) & 255, Z = Math.floor(z) & 255;
+        x -= Math.floor(x); y -= Math.floor(y); z -= Math.floor(z);
+        const u = fade(x), v = fade(y), w = fade(z);
+        const A = perm[X] + Y, AA = perm[A] + Z, AB = perm[A + 1] + Z;
+        const B = perm[X + 1] + Y, BA = perm[B] + Z, BB = perm[B + 1] + Z;
+        return lerp(
+          lerp(
+            lerp(grad(perm[AA], x, y, z), grad(perm[BA], x - 1, y, z), u),
+            lerp(grad(perm[AB], x, y - 1, z), grad(perm[BB], x - 1, y - 1, z), u), v),
+          lerp(
+            lerp(grad(perm[AA + 1], x, y, z - 1), grad(perm[BA + 1], x - 1, y, z - 1), u),
+            lerp(grad(perm[AB + 1], x, y - 1, z - 1), grad(perm[BB + 1], x - 1, y - 1, z - 1), u), v),
+          w
+        );
+      }
+
+      // ====================== SCENE SETUP ======================
+      const canvas = document.getElementById('voxel-canvas');
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+      camera.position.set(0, 0, 8.5);
+
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setClearColor(0x0A0A0A, 1);
+
+      // ====================== VOXEL GRID (INSTANCED MESH) ======================
+      // Definimos la rejilla tridimensional N x N x N
+      const GRID_SIZE = 26; // 26x26x26 = 17,576 voxels individuales
+      const TOTAL_VOXELS = GRID_SIZE * GRID_SIZE * GRID_SIZE;
+      const SPACING = 0.14; // Distancia entre centros de voxels
+      const BASE_SIZE = 0.065; // Tamaño del cubo individual
+
+      // Geometría y Material para Instancing
+      const geometry = new THREE.BoxGeometry(BASE_SIZE, BASE_SIZE, BASE_SIZE);
+      const material = new THREE.MeshStandardMaterial({
+        roughness: 0.25,
+        metalness: 0.85,
+        wireframe: false
+      });
+
+      // Luces para dar volumen cibernético/metálico a las caras de los cubos
+      const ambientLight = new THREE.AmbientLight(0x111122, 1.5);
+      scene.add(ambientLight);
+
+      const light1 = new THREE.PointLight(0x00E5FF, 15, 20);
+      light1.position.set(4, 5, 4);
+      scene.add(light1);
+
+      const light2 = new THREE.PointLight(0xFF0055, 12, 20);
+      light2.position.set(-4, -5, -4);
+      scene.add(light2);
+
+      const instancedMesh = new THREE.InstancedMesh(geometry, material, TOTAL_VOXELS);
+      scene.add(instancedMesh);
+
+      // Guardar las posiciones base neutras (Grid 3D)
+      const basePositions = new Float32Array(TOTAL_VOXELS * 3);
+      const dummy = new THREE.Object3D();
+      const tempColor = new THREE.Color();
+
+      // Paleta cibernética: Azul Cobalto -> Cyan Neón -> Magenta Digital -> Dorado Quant
+      const colorA = new THREE.Color(0x002244);
+      const colorB = new THREE.Color(0x00E5FF);
+      const colorC = new THREE.Color(0xFF007F);
+      const colorD = new THREE.Color(0xFFD700);
+
+      const offset = (GRID_SIZE - 1) * SPACING * 0.5;
+      let idx = 0;
+
+      for (let x = 0; x < GRID_SIZE; x++) {
+        for (let y = 0; y < GRID_SIZE; y++) {
+          for (let z = 0; z < GRID_SIZE; z++) {
+            const posX = x * SPACING - offset;
+            const posY = y * SPACING - offset;
+            const posZ = z * SPACING - offset;
+
+            basePositions[idx * 3]     = posX;
+            basePositions[idx * 3 + 1] = posY;
+            basePositions[idx * 3 + 2] = posZ;
+
+            idx++;
+          }
+        }
+      }
+
+      // ====================== ANIMATION LOOP ======================
+      let time = 0;
+      const noiseScale = 0.55;
+
+      function animate() {
+        requestAnimationFrame(animate);
+        time += 0.008;
+
+        let instanceIdx = 0;
+
+        for (let i = 0; i < TOTAL_VOXELS; i++) {
+          const bx = basePositions[i * 3];
+          const by = basePositions[i * 3 + 1];
+          const bz = basePositions[i * 3 + 2];
+
+          // Distancia al centro de la matriz
+          const distFromCenter = Math.sqrt(bx * bx + by * by + bz * bz);
+
+          // 1. Onda esférica desde el centro + Ruido 3D
+          const wave = Math.sin(distFromCenter * 3.5 - time * 2.5);
+          const noise = noise3D(bx * noiseScale + time * 0.3, by * noiseScale, bz * noiseScale + time * 0.3);
+
+          // Factor de modulación combinado [0.0 - 1.0]
+          const factor = (wave * 0.5 + 0.5) * 0.6 + (noise * 0.5 + 0.5) * 0.4;
+
+          // 2. Modificación de Posición (Desplazamiento radial)
+          const disp = factor * 0.22;
+          const dirX = bx / (distFromCenter + 0.001);
+          const dirY = by / (distFromCenter + 0.001);
+          const dirZ = bz / (distFromCenter + 0.001);
+
+          dummy.position.set(
+            bx + dirX * disp,
+            by + dirY * disp,
+            bz + dirZ * disp
+          );
+
+          // 3. Modificación de Escala (Los voxels "latirán" de tamaño)
+          const scale = Math.max(0.1, Math.pow(factor, 2.2) * 2.2);
+          dummy.scale.set(scale, scale, scale);
+
+          // 4. Modificación de Rotación individual
+          dummy.rotation.x = factor * Math.PI * 0.5;
+          dummy.rotation.y = time * 0.5 + factor * Math.PI;
+
+          dummy.updateMatrix();
+          instancedMesh.setMatrixAt(instanceIdx, dummy.matrix);
+
+          // 5. Asignación de Color según el nivel de activación (Factor)
+          if (factor < 0.33) {
+            tempColor.copy(colorA).lerp(colorB, factor / 0.33);
+          } else if (factor < 0.66) {
+            tempColor.copy(colorB).lerp(colorC, (factor - 0.33) / 0.33);
+          } else {
+            tempColor.copy(colorC).lerp(colorD, (factor - 0.66) / 0.34);
+          }
+
+          instancedMesh.setColorAt(instanceIdx, tempColor);
+
+          instanceIdx++;
+        }
+
+        instancedMesh.instanceMatrix.needsUpdate = true;
+        if (instancedMesh.instanceColor) instancedMesh.instanceColor.needsUpdate = true;
+
+        // Rotación general de la matriz completa en el espacio
+        instancedMesh.rotation.y = time * 0.15;
+        instancedMesh.rotation.x = Math.sin(time * 0.1) * 0.25;
+
+        renderer.render(scene, camera);
+      }
+
+      animate();
+
+      // ====================== RESIZE ======================
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    </script>
+</body>
+</html>

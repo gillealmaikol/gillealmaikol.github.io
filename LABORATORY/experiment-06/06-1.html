@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Core_FlowField_v4 — Vector Field</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #0A0A0A;
+        }
+        #flow-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="flow-canvas"></canvas>
+
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+      }
+    }
+    </script>
+
+    <script type="module">
+      import * as THREE from 'three';
+
+      // ====================== NOISE (Perlin 3D) ======================
+      function fade(t) { return t * t * t * (t * (t * 6 - 15) + 10); }
+      function lerp(a, b, t) { return a + t * (b - a); }
+      function grad(hash, x, y, z) {
+        const h = hash & 15;
+        const u = h < 8 ? x : y;
+        const v = h < 4 ? y : h === 12 || h === 14 ? x : z;
+        return ((h & 1) === 0 ? u : -u) + ((h & 2) === 0 ? v : -v);
+      }
+      const perm = new Uint8Array(512);
+      const p = new Uint8Array(256);
+      for (let i = 0; i < 256; i++) p[i] = i;
+      for (let i = 255; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [p[i], p[j]] = [p[j], p[i]];
+      }
+      for (let i = 0; i < 512; i++) perm[i] = p[i & 255];
+
+      function noise3D(x, y, z) {
+        const X = Math.floor(x) & 255, Y = Math.floor(y) & 255, Z = Math.floor(z) & 255;
+        x -= Math.floor(x); y -= Math.floor(y); z -= Math.floor(z);
+        const u = fade(x), v = fade(y), w = fade(z);
+        const A = perm[X] + Y, AA = perm[A] + Z, AB = perm[A + 1] + Z;
+        const B = perm[X + 1] + Y, BA = perm[B] + Z, BB = perm[B + 1] + Z;
+        return lerp(
+          lerp(
+            lerp(grad(perm[AA], x, y, z), grad(perm[BA], x - 1, y, z), u),
+            lerp(grad(perm[AB], x, y - 1, z), grad(perm[BB], x - 1, y - 1, z), u), v),
+          lerp(
+            lerp(grad(perm[AA + 1], x, y, z - 1), grad(perm[BA + 1], x - 1, y, z - 1), u),
+            lerp(grad(perm[AB + 1], x, y - 1, z - 1), grad(perm[BB + 1], x - 1, y - 1, z - 1), u), v),
+          w
+        );
+      }
+
+      // ====================== SCENE SETUP ======================
+      const canvas = document.getElementById('flow-canvas');
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+      camera.position.set(0, 0, 6.5);
+
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setClearColor(0x0A0A0A, 1);
+
+      // ====================== PARTICLE SYSTEM ======================
+      const COUNT = 18000;
+      const BOUNDS = 2.8; // Límites del volumen cúbico
+      
+      const positions = new Float32Array(COUNT * 3);
+      const colors = new Float32Array(COUNT * 3);
+      const velocities = new Float32Array(COUNT * 3);
+
+      // Paleta: Neón Verde Esmeralda -> Cian -> Azul -> Violeta
+      const colorA = new THREE.Color(0x00FF87);
+      const colorB = new THREE.Color(0x60EFFF);
+      const colorC = new THREE.Color(0x0061FF);
+
+      function resetParticle(i) {
+        positions[i * 3]     = (Math.random() - 0.5) * BOUNDS * 2;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * BOUNDS * 2;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * BOUNDS * 2;
+        
+        velocities[i * 3]     = 0;
+        velocities[i * 3 + 1] = 0;
+        velocities[i * 3 + 2] = 0;
+      }
+
+      for (let i = 0; i < COUNT; i++) {
+        resetParticle(i);
+
+        // Color basado en la posición Y
+        const t = (positions[i * 3 + 1] / BOUNDS + 1) * 0.5;
+        let c = t < 0.5 
+          ? colorA.clone().lerp(colorB, t * 2) 
+          : colorB.clone().lerp(colorC, (t - 0.5) * 2);
+
+        colors[i * 3]     = c.r;
+        colors[i * 3 + 1] = c.g;
+        colors[i * 3 + 2] = c.b;
+      }
+
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+      const material = new THREE.PointsMaterial({
+        size: 0.024,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.65,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+      });
+
+      const particleSystem = new THREE.Points(geometry, material);
+      scene.add(particleSystem);
+
+      // ====================== ANIMATION LOOP ======================
+      let time = 0;
+      const noiseScale = 0.6;
+      const speed = 0.012;
+
+      function animate() {
+        requestAnimationFrame(animate);
+        time += 0.003;
+
+        const pos = geometry.attributes.position.array;
+
+        for (let i = 0; i < COUNT; i++) {
+          const idx = i * 3;
+          let x = pos[idx];
+          let y = pos[idx + 1];
+          let z = pos[idx + 2];
+
+          // Obtener ángulos desde el campo de ruido 3D
+          const n1 = noise3D(x * noiseScale + time, y * noiseScale, z * noiseScale);
+          const n2 = noise3D(x * noiseScale, y * noiseScale + time, z * noiseScale);
+          const n3 = noise3D(x * noiseScale, y * noiseScale, z * noiseScale + time);
+
+          // Convertir el ruido en dirección (Vector de Flujo)
+          const theta = n1 * Math.PI * 2;
+          const phi = n2 * Math.PI;
+
+          const vx = Math.sin(phi) * Math.cos(theta);
+          const vy = Math.cos(phi);
+          const vz = Math.sin(phi) * Math.sin(theta);
+
+          // Inercia/Suavizado
+          velocities[idx]     = velocities[idx] * 0.92 + vx * speed * 0.08;
+          velocities[idx + 1] = velocities[idx + 1] * 0.92 + vy * speed * 0.08;
+          velocities[idx + 2] = velocities[idx + 2] * 0.92 + vz * speed * 0.08;
+
+          pos[idx]     += velocities[idx];
+          pos[idx + 1] += velocities[idx + 1];
+          pos[idx + 2] += velocities[idx + 2];
+
+          // Reiniciar partícula si sale de los límites del cubo
+          if (Math.abs(pos[idx]) > BOUNDS || Math.abs(pos[idx + 1]) > BOUNDS || Math.abs(pos[idx + 2]) > BOUNDS) {
+            resetParticle(i);
+          }
+        }
+
+        geometry.attributes.position.needsUpdate = true;
+
+        // Rotación orbital suave de la cámara/escena
+        particleSystem.rotation.y = time * 0.15;
+        particleSystem.rotation.x = Math.sin(time * 0.1) * 0.1;
+
+        renderer.render(scene, camera);
+      }
+
+      animate();
+
+      // ====================== RESIZE ======================
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    </script>
+</body>
+</html>

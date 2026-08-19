@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brutalist — Type Study</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="brutalist.css">
+</head>
+<body>
+    <div class="panel-indicator">
+        <span class="panel-current">01</span>
+        <span class="panel-sep">/</span>
+        <span class="panel-total">03</span>
+    </div>
+
+    <button class="nav-arrow nav-prev" aria-label="Previous" disabled>
+        <span>←</span>
+    </button>
+    <button class="nav-arrow nav-next" aria-label="Next">
+        <span>→</span>
+    </button>
+
+    <main class="panels" id="panels">
+
+        <!-- PANEL 01 — COVER -->
+        <section class="panel panel-01 active" data-panel="1">
+            <div class="panel-grid cover-grid">
+                <header class="cover-meta">
+                    <span>TYPE STUDY</span>
+                    <span>01 / 03</span>
+                    <span>2026</span>
+                </header>
+
+                <div class="cover-center">
+                    <p class="cover-tag">RAW / STRUCTURAL</p>
+                    <h1 class="cover-title">BRUTAL</h1>
+                    <p class="cover-sub">A study of weight,<br>force and unfinished form.</p>
+                </div>
+
+                <nav class="cover-nodes">
+                    <button class="node" data-go="2">
+                        <span class="node-num">01</span>
+                        <span class="node-label">TYPE</span>
+                    </button>
+                    <button class="node" data-go="3">
+                        <span class="node-num">02</span>
+                        <span class="node-label">FORM</span>
+                    </button>
+                    <button class="node" data-go="2">
+                        <span class="node-num">03</span>
+                        <span class="node-label">SPEC</span>
+                    </button>
+                    <button class="node" data-go="3">
+                        <span class="node-num">04</span>
+                        <span class="node-label">EDGE</span>
+                    </button>
+                </nav>
+
+                <div class="cover-hint">ARROWS · NODES · KEYBOARD</div>
+            </div>
+        </section>
+
+        <!-- PANEL 02 — TYPE -->
+        <section class="panel panel-02" data-panel="2">
+            <div class="panel-grid type-grid">
+                <header class="section-meta">
+                    <span class="num">02</span>
+                    <span class="label">THE TYPEFACE</span>
+                </header>
+
+                <div class="type-hero">
+                    <h2>SPACE GROTESK</h2>
+                    <p class="lead">Bold, geometric, slightly imperfect. Built to feel structural rather than refined.</p>
+                </div>
+
+                <div class="type-specs">
+                    <div class="spec">
+                        <span class="spec-label">Classification</span>
+                        <span class="spec-value">Geometric Sans</span>
+                    </div>
+                    <div class="spec">
+                        <span class="spec-label">Weight</span>
+                        <span class="spec-value">400–700</span>
+                    </div>
+                    <div class="spec">
+                        <span class="spec-label">Mood</span>
+                        <span class="spec-value">Raw / Heavy</span>
+                    </div>
+                    <div class="spec">
+                        <span class="spec-label">Best for</span>
+                        <span class="spec-value">Posters · UI · Impact</span>
+                    </div>
+                </div>
+
+                <div class="type-specimen">
+                    <div class="specimen-large">Aa</div>
+                    <div class="specimen-row">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+                    <div class="specimen-row">abcdefghijklmnopqrstuvwxyz</div>
+                    <div class="specimen-row">0123456789  !@#$%^&amp;*()</div>
+                </div>
+
+                <div class="type-notes">
+                    <div class="note">
+                        <h3>Character</h3>
+                        <p>Wide proportions and hard terminals. It refuses to be polite. Ideal when the message needs weight more than elegance.</p>
+                    </div>
+                    <div class="note">
+                        <h3>Pairing</h3>
+                        <p>IBM Plex Mono for technical notes and data. Keeps the system feeling constructed, not decorated.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANEL 03 — FORM -->
+        <section class="panel panel-03" data-panel="3">
+            <div class="panel-grid form-grid">
+                <header class="section-meta">
+                    <span class="num">03</span>
+                    <span class="label">FORM & MATERIAL</span>
+                </header>
+
+                <div class="form-hero">
+                    <h2>Concrete<br>& Edge</h2>
+                </div>
+
+                <div class="form-list">
+                    <div class="form-item">
+                        <span class="form-num">01</span>
+                        <div>
+                            <h3>Exposed Structure</h3>
+                            <p>No decoration. The skeleton is the design. Function left visible on purpose.</p>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <span class="form-num">02</span>
+                        <div>
+                            <h3>Heavy Contrast</h3>
+                            <p>Black against white. Thick against thin. Tension instead of harmony.</p>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <span class="form-num">03</span>
+                        <div>
+                            <h3>Unfinished</h3>
+                            <p>Rough edges, hard stops, asymmetric balance. Nothing is smoothed over.</p>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <span class="form-num">04</span>
+                        <div>
+                            <h3>Monumental Scale</h3>
+                            <p>Type large enough to feel physical. Size as material.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-footer">
+                    <p class="footer-quote">FORM FOLLOWS FORCE</p>
+                    <button class="restart-btn" data-go="1">RESET</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="brutalist.js"></script>
+</body>
+</html>

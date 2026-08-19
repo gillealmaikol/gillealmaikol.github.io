@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Core_HyperToros_v5 — Harmonic Toroidal Surface</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #0A0A0A;
+        }
+        #torus-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="torus-canvas"></canvas>
+
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+      }
+    }
+    </script>
+
+    <script type="module">
+      import * as THREE from 'three';
+
+      // ====================== NOISE (Perlin 3D clásico) ======================
+      function fade(t) { return t * t * t * (t * (t * 6 - 15) + 10); }
+      function lerp(a, b, t) { return a + t * (b - a); }
+      function grad(hash, x, y, z) {
+        const h = hash & 15;
+        const u = h < 8 ? x : y;
+        const v = h < 4 ? y : h === 12 || h === 14 ? x : z;
+        return ((h & 1) === 0 ? u : -u) + ((h & 2) === 0 ? v : -v);
+      }
+      const perm = new Uint8Array(512);
+      const p = new Uint8Array(256);
+      for (let i = 0; i < 256; i++) p[i] = i;
+      for (let i = 255; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [p[i], p[j]] = [p[j], p[i]];
+      }
+      for (let i = 0; i < 512; i++) perm[i] = p[i & 255];
+
+      function noise3D(x, y, z) {
+        const X = Math.floor(x) & 255, Y = Math.floor(y) & 255, Z = Math.floor(z) & 255;
+        x -= Math.floor(x); y -= Math.floor(y); z -= Math.floor(z);
+        const u = fade(x), v = fade(y), w = fade(z);
+        const A = perm[X] + Y, AA = perm[A] + Z, AB = perm[A + 1] + Z;
+        const B = perm[X + 1] + Y, BA = perm[B] + Z, BB = perm[B + 1] + Z;
+        return lerp(
+          lerp(
+            lerp(grad(perm[AA], x, y, z), grad(perm[BA], x - 1, y, z), u),
+            lerp(grad(perm[AB], x, y - 1, z), grad(perm[BB], x - 1, y - 1, z), u), v),
+          lerp(
+            lerp(grad(perm[AA + 1], x, y, z - 1), grad(perm[BA + 1], x - 1, y, z - 1), u),
+            lerp(grad(perm[AB + 1], x, y - 1, z - 1), grad(perm[BB + 1], x - 1, y - 1, z - 1), u), v),
+          w
+        );
+      }
+
+      // ====================== SCENE SETUP ======================
+      const canvas = document.getElementById('torus-canvas');
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+      camera.position.set(0, 0, 6.2);
+
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setClearColor(0x0A0A0A, 1);
+
+      // Radios dinámicos del Toroide (R = radio mayor, r = radio del tubo)
+      function getTorusDimensions() {
+        if (window.innerWidth < 768) return { R: 1.1, r: 0.45 };
+        else if (window.innerWidth < 1200) return { R: 1.35, r: 0.55 };
+        else return { R: 1.55, r: 0.65 };
+      }
+      let dims = getTorusDimensions();
+
+      // ====================== PARAMETRIC TORUS GEOMETRY ======================
+      const TUBO_SEGMENTS = 80;   // Resolución alrededor del tubo
+      const ANILLO_SEGMENTS = 220; // Resolución a lo largo del anillo principal
+      const COUNT = TUBO_SEGMENTS * ANILLO_SEGMENTS;
+
+      const positions = new Float32Array(COUNT * 3);
+      const colors = new Float32Array(COUNT * 3);
+      const angles = new Float32Array(COUNT * 2); // Guarda u (ángulo mayor) y v (ángulo tubo)
+
+      // Paleta: Violeta Eléctrico -> Rosa Magenta -> Naranja Neón -> Dorado
+      const colorA = new THREE.Color(0x8A2BE2);
+      const colorB = new THREE.Color(0xFF007F);
+      const colorC = new THREE.Color(0xFF7518);
+      const colorD = new THREE.Color(0xFFD700);
+
+      let idx = 0;
+      for (let i = 0; i < ANILLO_SEGMENTS; i++) {
+        const u = (i / ANILLO_SEGMENTS) * Math.PI * 2; // Ángulo del anillo principal
+
+        for (let j = 0; j < TUBO_SEGMENTS; j++) {
+          const v = (j / TUBO_SEGMENTS) * Math.PI * 2; // Ángulo de la sección transversal
+
+          angles[idx * 2]     = u;
+          angles[idx * 2 + 1] = v;
+
+          // Ecuación paramétrica estándar del Toroide
+          const x = (dims.R + dims.r * Math.cos(v)) * Math.cos(u);
+          const y = (dims.R + dims.r * Math.cos(v)) * Math.sin(u);
+          const z = dims.r * Math.sin(v);
+
+          positions[idx * 3]     = x;
+          positions[idx * 3 + 1] = y;
+          positions[idx * 3 + 2] = z;
+
+          // Asignar gradiente cíclico a lo largo del toroide
+          const t = (u / (Math.PI * 2));
+          let c;
+          if (t < 0.33) {
+            c = colorA.clone().lerp(colorB, t / 0.33);
+          } else if (t < 0.66) {
+            c = colorB.clone().lerp(colorC, (t - 0.33) / 0.33);
+          } else {
+            c = colorC.clone().lerp(colorD, (t - 0.66) / 0.34);
+          }
+
+          colors[idx * 3]     = c.r;
+          colors[idx * 3 + 1] = c.g;
+          colors[idx * 3 + 2] = c.b;
+
+          idx++;
+        }
+      }
+
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+      const material = new THREE.PointsMaterial({
+        size: 0.022,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.8,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+      });
+
+      const torusSystem = new THREE.Points(geometry, material);
+      // Inclinación inicial para apreciar la tridimensionalidad y el centro hueco
+      torusSystem.rotation.x = Math.PI * 0.32;
+      scene.add(torusSystem);
+
+      // ====================== ANIMATION LOOP ======================
+      let time = 0;
+
+      function animate() {
+        requestAnimationFrame(animate);
+        time += 0.005;
+
+        const pos = geometry.attributes.position.array;
+
+        for (let k = 0; k < COUNT; k++) {
+          const u = angles[k * 2];
+          const v = angles[k * 2 + 1];
+
+          // 1. Armónicos cruzados (Frecuencias que retuercen el tubo)
+          const harmonic1 = Math.sin(u * 5 + time * 2) * 0.12;
+          const harmonic2 = Math.cos(v * 3 - time * 1.5) * 0.08;
+
+          // 2. Ruido Perlin 3D sobre las coordenadas de la superficie
+          const nx = Math.cos(u) * 1.2;
+          const ny = Math.sin(u) * 1.2;
+          const nz = Math.sin(v) * 1.2;
+          const noiseDisp = noise3D(nx + time * 0.5, ny, nz + time * 0.5) * 0.20;
+
+          // Radio del tubo alterado por la combinación armónica + ruido
+          const currentTubeRadius = dims.r * (1 + harmonic1 + harmonic2 + noiseDisp);
+
+          // Torsión longitudinal en espiral (efecto Cinta de Moebius / Hélice)
+          const twist = u * 2 + time * 0.8;
+          const vTwisted = v + twist;
+
+          // Re-cálculo de la posición tridimensional deformada
+          const x = (dims.R + currentTubeRadius * Math.cos(vTwisted)) * Math.cos(u);
+          const y = (dims.R + currentTubeRadius * Math.cos(vTwisted)) * Math.sin(u);
+          const z = currentTubeRadius * Math.sin(vTwisted) + Math.sin(u * 3 + time) * 0.15;
+
+          pos[k * 3]     = x;
+          pos[k * 3 + 1] = y;
+          pos[k * 3 + 2] = z;
+        }
+
+        geometry.attributes.position.needsUpdate = true;
+
+        // Rotación continua de todo el toroide
+        torusSystem.rotation.z = time * 0.1;
+        torusSystem.rotation.y = Math.sin(time * 0.08) * 0.2;
+
+        renderer.render(scene, camera);
+      }
+
+      animate();
+
+      // ====================== RESIZE ======================
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        dims = getTorusDimensions();
+      });
+    </script>
+</body>
+</html>
