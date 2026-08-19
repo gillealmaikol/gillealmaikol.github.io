@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Typeface Study — Creative Coding Lab</title>
+    <title>G'IA Studio — Frontend Architecture &amp; Fine Digital Craft</title>
     <meta name="google-site-verification" content="6gmsDHmk6fwBDe8SKlIe-n_SsfQhZKctsydbcvHS9Xg" />
     <link rel="stylesheet" href="style.css">
 </head>
@@ -11,7 +11,7 @@
 
 <header class="flex-row">
     <div class="logo">
-        <h2>CREATIVE LAB</h2>
+        <h2>G'IA STUDIO</h2>
     </div>
 
     <!-- Botón hamburguesa -->
@@ -23,133 +23,58 @@
 
     <nav class="nav">
         <ul>
-            <li><a href="#lab"><h2>EXP_INDEX [11]</h2></a></li>
+            <li><a href="#portfolio"><h2>PORTFOLIO_INDEX [01]</h2></a></li>
         </ul>
     </nav>
 </header>
 
 <main class="flex-column">
-    <!-- Pestañas de control rápido para los 8 Experimentos -->
-    <div class="preview-tabs" role="tablist" aria-label="Experimentos de laboratorio">
-        <button class="tab-btn active" role="tab" aria-selected="true" data-src="/LABORATORY/experiment-01/01.html" data-id="exp-01">
-            01. Sphere Noise
-        </button>
-        <button class="tab-btn" role="tab" aria-selected="false" data-src="/LABORATORY/experiment-02/02.html" data-id="exp-02">
-            02. Particulate Core
-        </button>
-        <button class="tab-btn" role="tab" aria-selected="false" data-src="/LABORATORY/experiment-03/03.html" data-id="exp-03">
-            03. Nebula Core
-        </button>
-        <button class="tab-btn" role="tab" aria-selected="false" data-src="/LABORATORY/experiment-04/04.html" data-id="exp-04">
-            04. Spherical FlowField
-        </button>
-        <button class="tab-btn" role="tab" aria-selected="false" data-src="/LABORATORY/experiment-05/05.html" data-id="exp-05">
-            05. HyperToros Geometry
-        </button>
-        <button class="tab-btn" role="tab" aria-selected="false" data-src="/LABORATORY/experiment-06/06.html" data-id="exp-06">
-            06. Liquid Shader
-        </button>
-        <button class="tab-btn" role="tab" aria-selected="false" data-src="/LABORATORY/experiment-07/07.html" data-id="exp-07">
-            07. Quantum Voxel
-        </button>
-        <button class="tab-btn" role="tab" aria-selected="false" data-src="/LABORATORY/experiment-08/08.html" data-id="exp-08">
-            08. Chaotic Attractor
-        </button>
-        <button class="tab-btn" role="tab" aria-selected="false" data-src="/LABORATORY/experiment-09/09.html" data-id="exp-09">
-            09. NeuralMesh
-        </button>
-        <button class="tab-btn" role="tab" aria-selected="false" data-src="/LABORATORY/experiment-10/10.html" data-id="exp-09">
-            10 Fluid Glass
-        </button>
-        <button class="tab-btn" role="tab" aria-selected="false" data-src="/LABORATORY/experiment-11/11.html" data-id="exp-09">
-            11 Particle
+    <!-- Pestaña de control activo para el proyecto -->
+    <div class="preview-tabs" role="tablist" aria-label="Control de Proyecto">
+        <button class="tab-btn active" role="tab" aria-selected="true" data-src="/PROJECTS/woltex-hero/index.html" data-id="project-01">
+            01. Woltex Hero — Fine Dining Architecture
         </button>
     </div>
 
-    <!-- Visor de Experimentos (iFrame) -->
+    <!-- Visor del Proyecto (iFrame) -->
     <section class="viewport-container">
         <iframe
             id="preview-frame"
-            src="/LABORATORY/experiment-01/01.html"
-            title="Vista previa del experimento WebGL"
+            src="/Cyberpunk/index.html"
+            title="Vista previa del proyecto interactivo"
             loading="eager">
         </iframe>
     </section>
 </main>
 
-<!-- Panel Lateral Informativo Sincronizado -->
+<!-- Panel Lateral Informativo del Proyecto -->
 <aside class="project-details">
-    <article class="project-item active" data-id="exp-01">
-        <h2 class="tag">PERLIN NOISE / MESH DEFORMATION</h2>
+    <article class="project-item active" data-id="project-01">
+        <h2 class="tag">HIGH-END FRONTEND / SCROLLYTELLING</h2>
         <div>
-            <h3>01_SphereNoise_Dynamics</h3>
-            <p>Deformación volumétrica continua mediante campos de ruido Perlin 3D sobre una malla esférica sutil.</p>
-        </div>
-    </article>
-
-    <article class="project-item" data-id="exp-02">
-        <h2 class="tag">PARTICLE SYSTEM / KINEMATICS</h2>
-        <div>
-            <h3>02_Particulate_Core</h3>
-            <p>Nube de puntos con distribución en enjambre y rotación orbital continua para el estudio de densidad óptica.</p>
-        </div>
-    </article>
-
-    <article class="project-item" data-id="exp-03">
-        <h2 class="tag">VOLUMETRIC / FRACTAL DENSITY</h2>
-        <div>
-            <h3>03_NebulaCore_Dispersal</h3>
-            <p>Evolución de densidad estelar mediante ruido multicapa y espectro cian/violeta de emisión aditiva.</p>
-        </div>
-    </article>
-
-    <article class="project-item" data-id="exp-04">
-        <h2 class="tag">VECTOR FIELD / ORGANIC PULSE</h2>
-        <div>
-            <h3>04_Spherical_FlowField</h3>
-            <p>Partículas en flujo vectorial tangencial con pulsación radial orgánica que simula un corazón fluido.</p>
-        </div>
-    </article>
-
-    <article class="project-item" data-id="exp-05">
-        <h2 class="tag">PARAMETRIC / HARMONIC SURFACES</h2>
-        <div>
-            <h3>05_HyperToros_WaveGeometry</h3>
-            <p>Superficie toroidal paramétrica modulada por frecuencias armónicas cruzadas y torsión senoidal.</p>
-        </div>
-    </article>
-
-    <article class="project-item" data-id="exp-06">
-        <h2 class="tag">CUSTOM GLSL / GPU PIPELINE</h2>
-        <div>
-            <h3>06_VertexDisplacement_LiquidShader</h3>
-            <p>Deformación procesada en la GPU mediante Custom GLSL Shaders con reflejos iridiscentes y efecto Fresnel.</p>
-        </div>
-    </article>
-
-    <article class="project-item" data-id="exp-07">
-        <h2 class="tag">INSTANCED MESH / DATA MATRIX</h2>
-        <div>
-            <h3>07_VoxelGrid_QuantumMatrix</h3>
-            <p>Matriz tridimensional de +17,000 voxels optimizados por Instancing y modulados por ondas radiales.</p>
-        </div>
-    </article>
-
-    <article class="project-item" data-id="exp-08">
-        <h2 class="tag">CHAOTIC DYNAMICS / NON-LINEAR</h2>
-        <div>
-            <h3>08_AttractorSystem_AizawaVortex</h3>
-            <p>Sistema dinámico no lineal resuelto en tiempo real mediante ecuaciones diferenciales de Aizawa.</p>
+            <h3>01_Woltex_FineDining_Recreation</h3>
+            <p>Recreación de alto rendimiento inspirada en experiencias fine-dining, enfocada en la velocidad, narrativa visual y estética minimalista.</p>
+            <hr class="project-divider">
+            <div class="project-deep-dive">
+                <h4>Filosofía de Diseño</h4>
+                <p>Este desarrollo fusiona la precisión técnica del desarrollo full-stack con una dirección de arte sofisticada. Cada transición y bloque de contenido está optimizado para transmitir elegancia, estrategia y una identidad de marca inconfundible.</p>
+                <h4>Especificaciones Técnicas</h4>
+                <ul>
+                    <li>Arquitectura limpia orientada a rendimiento móvil y transiciones fluidas.</li>
+                    <li>Tipografía y jerarquía visual de alta gama al estilo editorial.</li>
+                    <li>Estructura modular preparada para la integración de futuros proyectos de la agencia.</li>
+                </ul>
+            </div>
         </div>
     </article>
 </aside>
 
 <footer class="flex-column">
     <div class="footer-left">
-        <h2>© 2026 STUDIO</h2>
+        <h2>© 2026 G'IA STUDIO</h2>
     </div>
     <div class="footer-center">
-        <h2>INTERACTIVE GRAPHICS &amp; SHADER EXPERIMENTS</h2>
+        <h2>HIGH-PERFORMANCE WEB EXPERIENCES &amp; STRATEGY</h2>
     </div>
 </footer>
 
