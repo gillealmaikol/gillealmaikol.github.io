@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10_NeuralMesh — Monochrome Spherical Matrix</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { width: 100%; height: 100%; overflow: hidden; background: #0A0A0A; }
+        #canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script type="importmap">
+        { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+
+        const isMobile = window.innerWidth < 768;
+        const count = isMobile ? 85 : 180;
+        const connectionDistance = isMobile ? 0.75 : 0.85;
+        const SPHERE_RADIUS = 1.85; // Radio límite de la esfera orgánica
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.z = isMobile ? 5.2 : 4.5;
+
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas'), antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        const particles = [];
+        
+        // Generar partículas dentro del volumen de la esfera
+        for (let i = 0; i < count; i++) {
+            const u = Math.random();
+            const v = Math.random();
+            const theta = u * 2.0 * Math.PI;
+            const phi = Math.acos(2.0 * v - 1.0);
+            
+            const r = Math.cbrt(Math.random()) * SPHERE_RADIUS;
+
+            const x = r * Math.sin(phi) * Math.cos(theta);
+            const y = r * Math.sin(phi) * Math.sin(theta);
+            const z = r * Math.cos(phi);
+
+            const p = new THREE.Vector3(x, y, z);
+            
+            const vel = new THREE.Vector3(
+                (Math.random() - 0.5) * 0.007,
+                (Math.random() - 0.5) * 0.007,
+                (Math.random() - 0.5) * 0.007
+            );
+
+            particles.push({ position: p, velocity: vel });
+        }
+
+        // ====================== NODOS (PARTÍCULAS) ======================
+        const nodesGeometry = new THREE.BufferGeometry();
+        const nodePositions = new Float32Array(count * 3);
+        const nodeColors = new Float32Array(count * 3);
+
+        nodesGeometry.setAttribute('position', new THREE.BufferAttribute(nodePositions, 3));
+        nodesGeometry.setAttribute('color', new THREE.BufferAttribute(nodeColors, 3));
+        
+        const nodesMaterial = new THREE.PointsMaterial({
+            size: isMobile ? 0.035 : 0.025,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.9,
+            blending: THREE.AdditiveBlending
+        });
+        const nodesMesh = new THREE.Points(nodesGeometry, nodesMaterial);
+        scene.add(nodesMesh);
+
+        // ====================== CONEXIONES (LÍNEAS) ======================
+        const linesGeometry = new THREE.BufferGeometry();
+        const linesMaterial = new THREE.LineBasicMaterial({ 
+            vertexColors: true,
+            transparent: true, 
+            opacity: 0.45, 
+            blending: THREE.AdditiveBlending 
+        });
+        const linesMesh = new THREE.LineSegments(linesGeometry, linesMaterial);
+        scene.add(linesMesh);
+
+        // Paleta monocromática en escala de grises
+        const colorCore = new THREE.Color(0x333333);   // Gris grafito oscuro (Centro)
+        const colorMid  = new THREE.Color(0x888888);   // Gris plata medio
+        const colorOuter = new THREE.Color(0xFFFFFF);  // Blanco/Plata brillante (Borde)
+
+        const tempColor = new THREE.Color();
+
+        let time = 0;
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.005;
+
+            const linePositions = [];
+            const lineColors = [];
+
+            const nodePosAttr = nodesGeometry.attributes.position.array;
+            const nodeColorAttr = nodesGeometry.attributes.color.array;
+
+            for (let i = 0; i < count; i++) {
+                const p = particles[i];
+                p.position.add(p.velocity);
+
+                // Rebote Esférico
+                const distFromCenter = p.position.length();
+                if (distFromCenter > SPHERE_RADIUS) {
+                    const normal = p.position.clone().normalize();
+                    p.velocity.reflect(normal).multiplyScalar(0.95);
+                    p.position.clampLength(0, SPHERE_RADIUS);
+                }
+
+                // Actualizar posición del nodo
+                nodePosAttr[i * 3]     = p.position.x;
+                nodePosAttr[i * 3 + 1] = p.position.y;
+                nodePosAttr[i * 3 + 2] = p.position.z;
+
+                // Color del nodo basado en su distancia al centro (Factor 0.0 a 1.0)
+                const factor = Math.min(1.0, distFromCenter / SPHERE_RADIUS);
+                if (factor < 0.5) {
+                    tempColor.copy(colorCore).lerp(colorMid, factor / 0.5);
+                } else {
+                    tempColor.copy(colorMid).lerp(colorOuter, (factor - 0.5) / 0.5);
+                }
+
+                nodeColorAttr[i * 3]     = tempColor.r;
+                nodeColorAttr[i * 3 + 1] = tempColor.g;
+                nodeColorAttr[i * 3 + 2] = tempColor.b;
+
+                // Calcular conexiones y sus colores gradiente
+                for (let j = i + 1; j < count; j++) {
+                    const p2 = particles[j];
+                    const dist = p.position.distanceTo(p2.position);
+
+                    if (dist < connectionDistance) {
+                        linePositions.push(p.position.x, p.position.y, p.position.z);
+                        linePositions.push(p2.position.x, p2.position.y, p2.position.z);
+
+                        // Asignar colores a cada extremo de la línea para un degradado fluido
+                        const factor2 = Math.min(1.0, p2.position.length() / SPHERE_RADIUS);
+                        
+                        // Extremo A
+                        lineColors.push(tempColor.r, tempColor.g, tempColor.b);
+
+                        // Extremo B
+                        if (factor2 < 0.5) {
+                            tempColor.copy(colorCore).lerp(colorMid, factor2 / 0.5);
+                        } else {
+                            tempColor.copy(colorMid).lerp(colorOuter, (factor2 - 0.5) / 0.5);
+                        }
+                        lineColors.push(tempColor.r, tempColor.g, tempColor.b);
+                    }
+                }
+            }
+
+            nodesGeometry.attributes.position.needsUpdate = true;
+            nodesGeometry.attributes.color.needsUpdate = true;
+
+            linesGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+            linesGeometry.setAttribute('color', new THREE.Float32BufferAttribute(lineColors, 3));
+
+            // Rotación espacial continua
+            scene.rotation.y = time * 0.12;
+            scene.rotation.x = Math.sin(time * 0.08) * 0.15;
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>

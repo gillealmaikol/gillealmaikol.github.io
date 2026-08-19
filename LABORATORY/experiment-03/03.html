@@ -74,39 +74,38 @@
             );
         }
 
-// ====================== PALETA — FUEGO ORGÁNICO ======================
-// Negro → rojo profundo → carmesí → naranja → amarillo → blanco
-const stops = [
-    new THREE.Color(0x000000), // negro
-    new THREE.Color(0x120304), // negro rojizo
-    new THREE.Color(0x350508), // rojo oscuro
-    new THREE.Color(0x6E0B0D), // carmesí oscuro
-    new THREE.Color(0xA9160E), // rojo fuego
-    new THREE.Color(0xD9340B), // rojo naranja
-    new THREE.Color(0xF45B0A), // naranja
-    new THREE.Color(0xFF8C16), // naranja cálido
-    new THREE.Color(0xFFC52E), // amarillo fuego
-    new THREE.Color(0xFFF1B0), // amarillo pálido
-    new THREE.Color(0xFFFFFF), // blanco caliente
-    new THREE.Color(0xFFF1B0), // amarillo pálido
-    new THREE.Color(0xFFC52E), // amarillo
-    new THREE.Color(0xFF8C16), // naranja
-    new THREE.Color(0xE94A0B), // rojo naranja
-    new THREE.Color(0x9C100C), // rojo profundo
-    new THREE.Color(0x3A0507), // rojo casi negro
-    new THREE.Color(0x000000)  // negro
-];
+        // ====================== PALETA — FUEGO ORGÁNICO ======================
+        const stops = [
+            new THREE.Color(0x000000), // negro
+            new THREE.Color(0x120304), // negro rojizo
+            new THREE.Color(0x350508), // rojo oscuro
+            new THREE.Color(0x6E0B0D), // carmesí oscuro
+            new THREE.Color(0xA9160E), // rojo fuego
+            new THREE.Color(0xD9340B), // rojo naranja
+            new THREE.Color(0xF45B0A), // naranja
+            new THREE.Color(0xFF8C16), // naranja cálido
+            new THREE.Color(0xFFC52E), // amarillo fuego
+            new THREE.Color(0xFFF1B0), // amarillo pálido
+            new THREE.Color(0xFFFFFF), // blanco caliente
+            new THREE.Color(0xFFF1B0), // amarillo pálido
+            new THREE.Color(0xFFC52E), // amarillo
+            new THREE.Color(0xFF8C16), // naranja
+            new THREE.Color(0xE94A0B), // rojo naranja
+            new THREE.Color(0x9C100C), // rojo profundo
+            new THREE.Color(0x3A0507), // rojo casi negro
+            new THREE.Color(0x000000)  // negro
+        ];
 
-function sampleGradient(t) {
-    t = Math.max(0, Math.min(1, t));
-    const scaled = t * (stops.length - 1);
-    const i = Math.floor(scaled);
-    const f = scaled - i;
-    return stops[i].clone().lerp(
-        stops[Math.min(i + 1, stops.length - 1)],
-        f
-    );
-}
+        function sampleGradient(t) {
+            t = Math.max(0, Math.min(1, t));
+            const scaled = t * (stops.length - 1);
+            const i = Math.floor(scaled);
+            const f = scaled - i;
+            return stops[i].clone().lerp(
+                stops[Math.min(i + 1, stops.length - 1)],
+                f
+            );
+        }
 
         // ====================== SCENE ======================
         const canvas = document.getElementById('sphere-canvas');
@@ -124,7 +123,9 @@ function sampleGradient(t) {
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setClearColor(0x0A0A0A, 1);
 
-        // ====================== ESFERA ======================
+        // ====================== OPTIMIZACIÓN RESPONSIVA ======================
+        const isMobile = window.innerWidth < 768;
+
         function getRadius() {
             if (window.innerWidth < 768) return 1.15;
             if (window.innerWidth < 1200) return 1.45;
@@ -133,9 +134,9 @@ function sampleGradient(t) {
 
         let RADIUS = getRadius();
 
-        // Mayor cantidad = líneas más juntas
-        const MERIDIANS = 2000;
-        const SEGMENTS = 240;
+        // En móvil reducimos la densidad para suavizar la carga de la CPU
+        const MERIDIANS = isMobile ? 450 : 1800;
+        const SEGMENTS = isMobile ? 110 : 220;
 
         const group = new THREE.Group();
         scene.add(group);
@@ -176,7 +177,7 @@ function sampleGradient(t) {
             const material = new THREE.LineBasicMaterial({
                 vertexColors: true,
                 transparent: true,
-                opacity: 0.82,
+                opacity: isMobile ? 0.95 : 0.82, // Un poco más opaco en móvil para compensar la densidad
                 blending: THREE.AdditiveBlending,
                 depthWrite: false
             });
