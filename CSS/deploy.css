@@ -1,0 +1,373 @@
+/* ====================== PANEL 03 — deploy / use ====================== */
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 0;
+    height: 100%;
+    min-height: 100%;
+}
+
+.grid-3 > .box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding: clamp(1.5rem, 4vw, 3.5rem);
+    overflow: hidden;
+    position: relative;
+}
+
+.box-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+/* ---- Weights ---- */
+.use-weights {
+    border-right: 1px solid rgba(0, 229, 255, 0.1);
+    border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+}
+
+.weights-preview {
+    text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    min-height: 5rem;
+}
+
+.weight-sample {
+    color: #fff;
+    font: 700 clamp(2rem, 5vw, 3.4rem) "Orbitron", sans-serif;
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 24px rgba(0, 229, 255, 0.3);
+    transition:
+        font-weight 0.28s ease,
+        letter-spacing 0.28s ease,
+        text-shadow 0.28s ease,
+        transform 0.35s var(--ease-spring);
+    cursor: default;
+}
+
+.weight-sample:hover {
+    transform: scale(1.04);
+    text-shadow:
+        0 0 28px rgba(0, 229, 255, 0.5),
+        0 0 48px rgba(255, 42, 109, 0.25);
+}
+
+.weight-name {
+    font-family: "Orbitron", sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--cyan);
+    opacity: 0.85;
+    transition: opacity 0.25s ease, color 0.25s ease;
+}
+
+.weights-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.4rem;
+}
+
+.weights-list button {
+    min-height: 2.5rem;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    background: transparent;
+    cursor: pointer;
+    font: 0.68rem "Orbitron", sans-serif;
+    letter-spacing: 0.1em;
+    transition:
+        color 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.25s var(--ease-spring);
+}
+
+.weights-list button:hover,
+.weights-list button:focus-visible {
+    border-color: var(--cyan);
+    color: #fff;
+    outline: none;
+    background: rgba(0, 229, 255, 0.1);
+    box-shadow: 0 0 14px rgba(0, 229, 255, 0.25);
+    transform: translateY(-3px);
+}
+
+.weights-list button.active {
+    border-color: var(--cyan);
+    color: #fff;
+    background: rgba(0, 229, 255, 0.14);
+    box-shadow: 0 0 16px rgba(0, 229, 255, 0.3), inset 0 0 12px rgba(0, 229, 255, 0.06);
+}
+
+/* ---- Applications ---- */
+.use-info {
+    border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+}
+
+.use-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.use-list li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 0.4rem;
+    border-bottom: 1px solid rgba(0, 229, 255, 0.08);
+    color: var(--muted);
+    cursor: default;
+    font: 0.95rem "Rajdhani", sans-serif;
+    position: relative;
+    transition:
+        padding 0.28s var(--ease-out),
+        color 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease;
+}
+
+.use-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    background: linear-gradient(90deg, rgba(255, 42, 109, 0.12), transparent);
+    transition: width 0.3s var(--ease-out);
+}
+
+.use-list li:hover {
+    padding-left: 0.85rem;
+    border-color: rgba(255, 42, 109, 0.4);
+    color: #fff;
+}
+
+.use-list li:hover::before {
+    width: 100%;
+}
+
+.use-list .num {
+    min-width: 1.7rem;
+    color: var(--cyan);
+    font: 0.7rem "Orbitron", sans-serif;
+    letter-spacing: 0.06em;
+    transition: color 0.25s ease, transform 0.25s var(--ease-spring);
+}
+
+.use-list li:hover .num {
+    color: var(--magenta);
+    transform: scale(1.15);
+}
+
+/* ---- Cyberpunk article ---- */
+.cyberpunk-article {
+    position: relative;
+    grid-column: 1 / -1;
+    border: 1px solid rgba(255, 42, 109, 0.35);
+    background:
+        linear-gradient(135deg, rgba(255, 42, 109, 0.09) 0%, rgba(0, 12, 28, 0.9) 45%, rgba(0, 20, 40, 0.95) 100%);
+    overflow: hidden;
+}
+
+.cyberpunk-article::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 3px;
+    background: var(--magenta);
+    box-shadow: 0 0 16px rgba(255, 42, 109, 0.65);
+    content: "";
+}
+
+/* scanning line inside article */
+.cyberpunk-article::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.5), transparent);
+    opacity: 0;
+    pointer-events: none;
+    animation: none;
+}
+
+.cyberpunk-article:hover::after {
+    opacity: 1;
+    animation: scan-sweep 2.2s ease-in-out infinite;
+}
+
+.article-content {
+    position: relative;
+    z-index: 3;
+    max-width: 720px;
+}
+
+.cyberpunk-article p {
+    max-width: 52ch;
+    margin-top: 0.9rem;
+}
+
+.cyberpunk-article em {
+    color: var(--cyan);
+    font-style: normal;
+    font-weight: 600;
+}
+
+.series-link {
+    position: relative;
+    color: var(--cyan);
+    cursor: pointer;
+    transition: color 0.25s ease;
+}
+
+.series-link::after {
+    position: absolute;
+    right: 0;
+    bottom: -2px;
+    left: 0;
+    height: 1px;
+    background: var(--magenta);
+    box-shadow: 0 0 10px rgba(255, 42, 109, 0.6);
+    content: "";
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s var(--ease-out);
+}
+
+.series-link:hover,
+.series-link:focus-visible {
+    color: #fff;
+    outline: none;
+}
+
+.series-link:hover::after,
+.series-link:focus-visible::after {
+    transform: scaleX(1);
+}
+
+/* Mini video screen */
+.mini-screen {
+    position: absolute;
+    right: clamp(1.5rem, 4vw, 3.5rem);
+    bottom: clamp(1.5rem, 3vw, 3rem);
+    z-index: 20;
+    width: min(300px, 38%);
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 3px;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.9) translateY(12px);
+    transition: opacity 0.4s ease, transform 0.4s var(--ease-out);
+}
+
+.mini-screen.visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
+}
+
+.mini-screen video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.mini-screen-frame {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(0, 229, 255, 0.55);
+    box-shadow:
+        0 0 20px rgba(0, 229, 255, 0.3),
+        inset 0 0 30px rgba(0, 0, 0, 0.45);
+    pointer-events: none;
+}
+
+.mini-screen-label {
+    position: absolute;
+    top: 6px;
+    left: 8px;
+    font-family: "Orbitron", sans-serif;
+    font-size: 0.45rem;
+    letter-spacing: 0.16em;
+    color: var(--magenta);
+    text-shadow: 0 0 8px rgba(255, 42, 109, 0.6);
+    z-index: 2;
+}
+
+/* ---- Entrance ---- */
+.panel-03.animate-in .use-weights {
+    animation: fade-up 0.6s var(--ease-out) both;
+}
+
+.panel-03.animate-in .use-info {
+    animation: fade-up 0.6s var(--ease-out) 0.1s both;
+}
+
+.panel-03.animate-in .cyberpunk-article {
+    animation: fade-up 0.65s var(--ease-out) 0.2s both;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 1024px) {
+    .grid-3 > .box {
+        padding: clamp(1.25rem, 3.5vw, 2.25rem);
+    }
+
+    .mini-screen {
+        width: min(220px, 42%);
+    }
+}
+
+@media (max-width: 700px) {
+    .grid-3 {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        min-height: 100%;
+        gap: 1.25rem;
+    }
+
+    .grid-3 > .box {
+        padding: 0;
+        overflow: visible;
+        border: none !important;
+    }
+
+    .use-weights,
+    .use-info {
+        border: none;
+    }
+
+    .weights-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cyberpunk-article {
+        padding: 1.15rem !important;
+        border: 1px solid rgba(255, 42, 109, 0.35) !important;
+    }
+
+    .mini-screen {
+        display: none;
+    }
+}

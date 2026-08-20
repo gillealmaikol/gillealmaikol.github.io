@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orbitron — Cyberpunk Type Specimen</title>
+    <meta name="description" content="Orbitron type specimen — geometric sans, neon, and the future that never arrived.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/systen.css">
+    <link rel="stylesheet" href="CSS/specimen.css">
+    <link rel="stylesheet" href="CSS/deploy.css">
+</head>
+<body>
+    <div class="grid-overlay" aria-hidden="true"></div>
+    <div class="scanlines" aria-hidden="true"></div>
+    <div class="vignette" aria-hidden="true"></div>
+    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+    <main class="panels" id="panels">
+        <header>
+            <nav>
+                <h3 class="brand-tag">CYBERPUNK / ORBITRON</h3>
+                <h3>SYS_VER <br><span class="system-status"><span class="dot"></span> // 01 — ACTIVE</span></h3>
+                <div class="nav-arrows">
+                    <button class="nav-arrow nav-prev" aria-label="Previous panel" disabled>
+                        <span>&lt;</span>
+                    </button>
+                    <br>
+                    <button class="nav-arrow nav-next" aria-label="Next panel">
+                        <span>&gt;</span>
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <!-- PANEL 01 — COVER -->
+        <section class="panel panel-01 active" data-panel="1">
+            <canvas id="blob-canvas"></canvas>
+            <div class="grid-1">
+                <p class="cover-meta glitch-hover" data-text="GEOMETRIC SANS · 2009 · MATT MCINERNEY">GEOMETRIC SANS · 2009 · MATT MCINERNEY</p>
+                <h1 class="cover-title" data-text="ORBITRON">ORBITRON</h1>
+                <h2 class="cover-sub">// GEOMETRY, TECHNOLOGY,<br>NEON &amp; THE FUTURE THAT NEVER ARRIVED.</h2>
+                <div class="cover-cta">
+                    <span class="pulse-line"></span>
+                    <span class="cover-hint">SCROLL OR USE ARROWS TO EXPLORE</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANEL 02 — ORIGIN & SPECIMEN -->
+        <section class="panel panel-02" data-panel="2">
+            <div class="grid-2">
+                <div class="historia">
+                    <h2 class="section-label">ORBITRON <span>HISTORY</span></h2>
+                    <div class="timeline" id="orbitron-timeline">
+                        <article class="timeline-item" data-year="2008">
+                            <h3><span class="year">2008</span><br>THE BEGINNING</h3>
+                            <p>Matt McInerney starts shaping Orbitron as a modern take on the geometric faces that defined science-fiction cinema and space-age design.</p>
+                        </article>
+                        <article class="timeline-item" data-year="2009">
+                            <h3><span class="year">2009</span><br>RELEASE</h3>
+                            <p>Four weights ship — Light, Medium, Bold, Black. Circular forms, modular joints and clean geometry lock in a purely technological voice.</p>
+                        </article>
+                        <article class="timeline-item" data-year="VISION">
+                            <h3><span class="year">VISION</span><br>A FUTURE THAT NEVER CAME</h3>
+                            <p>Orbitron sketches a visual language for spacecraft, orbital stations and neon cities — a future that already feels like nostalgia.</p>
+                        </article>
+                        <article class="timeline-item" data-year="VAR">
+                            <h3><span class="year">VARIABLE</span><br>EVOLUTION</h3>
+                            <p>The variable-font update opens new range for motion, UI and responsive systems without losing the original sci-fi DNA.</p>
+                        </article>
+                    </div>
+                </div>
+
+                <div class="caracteristicas" id="orbitron-features">
+                    <div class="caracteristicas-list" data-tag="family">
+                        <h3><span>//</span> FAMILY</h3>
+                        <p>SANS-SERIF</p>
+                        <p>DISPLAY</p>
+                    </div>
+                    <div class="caracteristicas-list" data-tag="structure">
+                        <h3><span>//</span> STRUCTURE</h3>
+                        <p>GEOMETRIC</p>
+                        <p>RECTILINEAR</p>
+                    </div>
+                    <div class="caracteristicas-list" data-tag="style">
+                        <h3><span>//</span> STYLE</h3>
+                        <p>FUTURISTIC</p>
+                        <p>SCI-FI</p>
+                    </div>
+                </div>
+
+                <div class="specimen">
+                    <div class="abc2 keyboard" id="keyboard" aria-label="Glyph specimen">
+                        <button type="button" data-key="A">A</button><button type="button" data-key="B">B</button><button type="button" data-key="C">C</button><button type="button" data-key="D">D</button><button type="button" data-key="E">E</button><button type="button" data-key="F">F</button><button type="button" data-key="G">G</button><button type="button" data-key="H">H</button><button type="button" data-key="I">I</button>
+                        <button type="button" data-key="J">J</button><button type="button" data-key="K">K</button><button type="button" data-key="L">L</button><button type="button" data-key="M">M</button><button type="button" data-key="N">N</button><button type="button" data-key="O">O</button><button type="button" data-key="P">P</button><button type="button" data-key="Q">Q</button><button type="button" data-key="R">R</button>
+                        <button type="button" data-key="S">S</button><button type="button" data-key="T">T</button><button type="button" data-key="U">U</button><button type="button" data-key="V">V</button><button type="button" data-key="W">W</button><button type="button" data-key="X">X</button><button type="button" data-key="Y">Y</button><button type="button" data-key="Z">Z</button><button type="button" data-key="1">1</button>
+                        <button type="button" data-key="2">2</button><button type="button" data-key="3">3</button><button type="button" data-key="4">4</button><button type="button" data-key="5">5</button><button type="button" data-key="6">6</button><button type="button" data-key="7">7</button><button type="button" data-key="8">8</button><button type="button" data-key="9">9</button><button type="button" data-key="0">0</button>
+                    </div>
+                    <h2 class="section-label">SPECIMEN <span>GLYPHS</span></h2>
+                    <p class="specimen-hint">Hover a key — watch the glyph expand</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANEL 03 — DEPLOY -->
+        <section class="panel panel-03" data-panel="3">
+            <div class="grid-3">
+                <div class="box use-weights">
+                    <div class="box-head">
+                        <h2 class="section-label">CHARACTERISTICS</h2>
+                        <h4>WEIGHTS</h4>
+                    </div>
+                    <div class="weights-preview">
+                        <div class="weight-sample" id="weight-sample" data-text="ORBITRON">ORBITRON</div>
+                        <p class="weight-name" id="weight-name">LIGHT</p>
+                    </div>
+                    <div class="weights-list" role="group" aria-label="Font weights">
+                        <button type="button" data-weight="300" data-name="Light" class="active">LIGHT</button>
+                        <button type="button" data-weight="500" data-name="Medium">MEDIUM</button>
+                        <button type="button" data-weight="700" data-name="Bold">BOLD</button>
+                        <button type="button" data-weight="900" data-name="Black">BLACK</button>
+                    </div>
+                </div>
+
+                <div class="box use-info">
+                    <div class="box-head">
+                        <h2 class="section-label">APPLICATIONS</h2>
+                        <h4>WHERE IT SHINES</h4>
+                    </div>
+                    <ul class="use-list">
+                        <li><span class="num">01</span><span class="use-text">Sci-fi film &amp; game titles</span></li>
+                        <li><span class="num">02</span><span class="use-text">Futuristic UI &amp; HUD systems</span></li>
+                        <li><span class="num">03</span><span class="use-text">Tech brand identity</span></li>
+                        <li><span class="num">04</span><span class="use-text">Neon posters &amp; cyberpunk events</span></li>
+                    </ul>
+                </div>
+
+                <div class="box cyberpunk-article">
+                    <div class="box-head">
+                        <h2 class="section-label magenta">WHAT DOES “CYBERPUNK” MEAN?</h2>
+                    </div>
+                    <div class="article-content" id="cyberpunk-context">
+                        <p>
+                            Born in the 1980s as a science-fiction subgenre,
+                            it fuses <em>cyber</em> (networks, machines, code)
+                            with <em>punk</em> (rebellion, the margins, refusal).
+                            It imagines a near future where high technology
+                            shares the street with decay, megacorporations
+                            and deep inequality.
+                        </p>
+                        <p>
+                            Visually it is neon, rain, chrome implants and
+                            night cities that never sleep. Orbitron holds that
+                            tension: precise geometric construction with the
+                            soul of a future that never fully arrived.
+                            Series such as
+                            <span class="series-link" tabindex="0">Cyberpunk: Edgerunners</span>
+                            pushed the aesthetic back into mass culture.
+                        </p>
+                    </div>
+                    <div class="mini-screen">
+                        <video muted loop playsinline preload="metadata">
+                            <source src="cyberpunk.mp4" type="video/mp4">
+                        </video>
+                        <div class="mini-screen-frame"></div>
+                        <span class="mini-screen-label">LIVE FEED</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <nav>
+                <h3><a href="#system" data-go="1">SYSTEM <br><span> // 01</span></a></h3>
+                <h3><a href="#specimen" data-go="2">SPECIMEN <br><span> // 02</span></a></h3>
+                <h3><a href="#deploy" data-go="3">DEPLOY <br><span> // 03</span></a></h3>
+            </nav>
+        </footer>
+    </main>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+        }
+    }
+    </script>
+    <script type="module" src="JS/canvas.js"></script>
+    <script type="module" src="JS/hud.js"></script>
+</body>
+</html>
