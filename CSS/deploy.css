@@ -15,7 +15,7 @@
 }
 @media (max-width: 700px) {
     .grid-3 > .box {
-        padding: 1em;
+        padding: 0.4em;
     }
 
 }

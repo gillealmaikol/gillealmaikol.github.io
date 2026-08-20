@@ -63,7 +63,7 @@
 }
 @media (max-width: 700px) {
     .historia {
-        padding: 1em;
+        padding: 0.4em;
     }
 }
 /* Stagger solo cuando entra la sección */
@@ -161,7 +161,7 @@
 }
 @media (max-width: 700px) {
     .specimen {
-        padding: 1em;
+        padding: 0.4em;
     }
     .abc2.keyboard {
         grid-template-columns: repeat(6, 1fr);

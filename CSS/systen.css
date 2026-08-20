@@ -212,7 +212,6 @@ header {
     padding: 2em;
     grid-column: 1 / 2;
     z-index: 30;
-    border-right: 1px solid #1A1A1A;
 }
 header h3 {
     writing-mode: sideways-lr;
@@ -260,7 +259,6 @@ header h3.active-link::before {
     box-shadow: 0 0 12px rgba(0, 229, 255, 0.4);
 }
 footer {
-    border-left: 1px solid #1A1A1A;
     grid-column: 3 / 4;
     height: 100%;
     padding: 2em;
@@ -281,6 +279,11 @@ footer h3 {
     header {
         padding: 0.4rem;
     }
+    footer h3, header h3 {
+        br {
+            display: none;
+        }
+    }
 }
 nav {
     height: 100%;
@@ -299,7 +302,6 @@ nav h3 span {
     color: var(--cyan);
     width: 100%;
     height: auto;
-    padding: 1em;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -307,7 +309,6 @@ nav h3 span {
     font-family: 'Orbitron', sans-serif;
     font-size: 0.8rem;
     transition: all 0.25s ease;
-    margin-top: 1em;
     backdrop-filter: blur(4px);
 }
 .nav-arrow:hover:not(:disabled) {
