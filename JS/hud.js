@@ -1,4 +1,3 @@
-
 import { checkPanel } from './canvas.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -28,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const oscillator = audioContext.createOscillator();
         const gain = audioContext.createGain();
         const now = audioContext.currentTime;
-        const tones = { key: [470, 720, 0.045], weight: [180, 300, 0.08], accordion: [260, 520, 0.1], click: [220, 330, 0.055] };
+        const tones = { key: [470, 720, 0.045], weight: [180, 300, 0.08], click: [220, 330, 0.055] };
         const [start, end, duration] = tones[type] || tones.click;
         oscillator.type = type === 'key' ? 'square' : 'sine';
         oscillator.frequency.setValueAtTime(start, now);
@@ -40,17 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
         oscillator.start(now);
         oscillator.stop(now + duration);
     }
-
-    document.querySelectorAll('.accordion-toggle').forEach(button => {
-        const content = document.getElementById(button.dataset.accordionTarget);
-        if (!content) return;
-        button.addEventListener('click', () => {
-            const open = button.getAttribute('aria-expanded') === 'true';
-            button.setAttribute('aria-expanded', String(!open));
-            content.classList.toggle('is-open', !open);
-            playUISound('accordion');
-        });
-    });
 
     document.querySelectorAll('.abc2.keyboard button').forEach(button => {
         button.addEventListener('click', () => {
@@ -143,59 +131,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ——— Teclado (flechas) ———
+    // ——— Teclado (solo izquierda / derecha) ———
     window.addEventListener('keydown', (e) => {
-        if (['ArrowUp', 'ArrowLeft'].includes(e.key)) {
+        if (['ArrowLeft'].includes(e.key)) {
             e.preventDefault();
             if (currentPanel > 1) updateHUD(currentPanel - 1);
         }
-        if (['ArrowDown', 'ArrowRight'].includes(e.key)) {
+        if (['ArrowRight'].includes(e.key)) {
             e.preventDefault();
             if (currentPanel < panels.length) updateHUD(currentPanel + 1);
         }
     });
-
-    // ——— Scroll / Wheel (desktop + móvil) ———
-    let wheelTimeout = null;
-    window.addEventListener('wheel', (e) => {
-        if (wheelTimeout) return;
-
-        if (e.deltaY > 30) {
-            // hacia abajo → siguiente
-            if (currentPanel < panels.length) updateHUD(currentPanel + 1);
-        } else if (e.deltaY < -30) {
-            // hacia arriba → anterior
-            if (currentPanel > 1) updateHUD(currentPanel - 1);
-        }
-
-        wheelTimeout = setTimeout(() => {
-            wheelTimeout = null;
-        }, 800);
-    }, { passive: true });
-
-    // Touch swipe (móvil)
-    let touchStartY = 0;
-    let touchStartedInScrollableContent = false;
-    window.addEventListener('touchstart', (e) => {
-        touchStartY = e.touches[0].clientY;
-        touchStartedInScrollableContent = Boolean(e.target.closest('.accordion-content.is-open'));
-    }, { passive: true });
-
-    window.addEventListener('touchend', (e) => {
-        if (touchStartedInScrollableContent) return;
-        const touchEndY = e.changedTouches[0].clientY;
-        const diff = touchStartY - touchEndY;
-
-        if (Math.abs(diff) > 60) {
-            if (diff > 0 && currentPanel < panels.length) {
-                // swipe up → siguiente
-                updateHUD(currentPanel + 1);
-            } else if (diff < 0 && currentPanel > 1) {
-                // swipe down → anterior
-                updateHUD(currentPanel - 1);
-            }
-        }
-    }, { passive: true });
 
     // Iniciar en panel 1
     updateHUD(1);
@@ -207,7 +153,6 @@ const miniScreen = document.querySelector('.mini-screen');
 const trailerVideo = document.querySelector('.mini-screen video');
 
 if (seriesLink && miniScreen && trailerVideo) {
-    
     seriesLink.addEventListener('mouseenter', () => {
         miniScreen.classList.add('visible');
         trailerVideo.currentTime = 0; // empieza desde el inicio

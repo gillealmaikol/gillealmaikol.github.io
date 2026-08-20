@@ -70,89 +70,66 @@
     display: flex;
     justify-content: space-between;
 }
-.accordion-toggle {
-    display: none;
-}
+
+/** ---------- ADAPTACIÓN MÓVIL (GRID 2 SIN ACORDEONES) ---------- **/
 @media (max-width: 700px) {
     .grid-2 {
         grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto;
+        grid-template-rows: auto;
         height: auto;
         min-height: 100%;
-        padding: clamp(0.75rem, 3vw, 1.25rem) 0;
-        gap: 0.55rem;
+        padding: 1.5rem 0;
+        gap: 1.5rem;
     }
+
     .historia {
         width: 100%;
         height: auto;
         grid-row: auto;
-        padding: clamp(1rem, 4vw, 1.5rem);
+        padding: 1rem 0;
         justify-content: flex-start;
-        gap: 0.8rem;
+        gap: 1rem;
+        overflow-y: visible;
     }
     .caracteristicas {
-        padding: 0.75rem clamp(1rem, 4vw, 1.5rem) 1.1rem;
-        gap: 0.6rem;
+        padding: 1rem 0;
+        gap: 1rem;
         justify-content: flex-start;
         background: rgba(0, 229, 255, 0.035);
+        height: auto;
     }
     .specimen {
-        padding: clamp(1rem, 4vw, 1.5rem);
+        padding: 1rem 0;
         gap: 1rem;
+        height: auto;
     }
-    .accordion-toggle {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border: 1px solid var(--border);
-        padding: 0.78rem 0.9rem;
-        color: var(--cyan);
-        background: linear-gradient(90deg, rgba(0, 229, 255, 0.08), rgba(255, 42, 109, 0.04));
-        box-shadow: inset 0 0 18px rgba(0, 229, 255, 0.035);
-        font: 500 clamp(0.62rem, 2.5vw, 0.75rem) 'Orbitron', sans-serif;
-        letter-spacing: 0.12em;
-        cursor: pointer;
-        touch-action: manipulation;
+    .timeline { 
+        gap: 1rem; 
+        padding-right: 0; 
     }
-    .accordion-toggle span {
-        color: var(--magenta);
-        font-size: 1rem;
-        transition: transform 0.28s ease;
+    .timeline-item { 
+        opacity: 1; 
+        transform: none; 
     }
-    .accordion-toggle[aria-expanded="true"] {
-        border-color: var(--cyan);
-        box-shadow: 0 0 14px rgba(0, 229, 255, 0.2), inset 0 0 18px rgba(0, 229, 255, 0.06);
+    .caracteristicas-list { 
+        opacity: 1; 
+        transform: none; 
+        writing-mode: initial; 
     }
-    .accordion-toggle[aria-expanded="true"] span { transform: rotate(45deg); }
-    .accordion-content {
-        max-height: 0;
-        overflow: hidden;
-        opacity: 0;
-        margin: 0;
-        transition: max-height 0.42s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease, margin 0.42s ease;
+    .abc2.keyboard { 
+        grid-template-columns: repeat(6, 1fr); 
     }
-    .accordion-content.is-open {
-        max-height: min(52vh, 30rem);
-        overflow-y: auto;
-        opacity: 1;
-        margin-top: 0.2rem;
-        -webkit-overflow-scrolling: touch;
-        overscroll-behavior: contain;
-        scrollbar-width: thin;
-        scrollbar-color: var(--cyan) transparent;
+    .abc2.keyboard button { 
+        min-height: 2.5rem; 
+        padding: 0.35rem; 
+        align-items: center; 
+        justify-content: center; 
     }
-    .accordion-content.is-open::-webkit-scrollbar { width: 4px; }
-    .accordion-content.is-open::-webkit-scrollbar-thumb { background: linear-gradient(var(--cyan), var(--magenta)); border-radius: 999px; }
-    .timeline { gap: 1rem; padding-right: 0.5rem; }
-    .timeline-item { opacity: 1; transform: none; }
-    .caracteristicas-list { opacity: 1; transform: none; writing-mode: initial; }
-    .features-toggle { grid-row: 2; margin: 0 clamp(1rem, 4vw, 1.5rem); width: auto; }
-    .caracteristicas { grid-row: 3; }
-    .abc2.keyboard { grid-template-columns: repeat(6, 1fr); }
-    .abc2.keyboard button { min-height: 2.5rem; padding: 0.35rem; align-items: center; justify-content: center; }
-    .abc2.keyboard button::after { display: none; }
+    .abc2.keyboard button::after { 
+        display: none; 
+    }
 }
+
 .caracteristicas-list {
     writing-mode: sideways-lr;
     opacity: 0;
@@ -322,3 +299,5 @@
     from { opacity: 0; transform: scale(0.75); filter: blur(6px); }
     to   { opacity: 1; transform: scale(1); filter: blur(0); }
 }
+
+

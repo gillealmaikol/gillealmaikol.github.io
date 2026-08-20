@@ -6,7 +6,6 @@
     grid-template-rows: auto 1fr;
     gap: 0;
 }
-
 .grid-3 > .box {
     padding: 4em;
     display: flex;
@@ -15,23 +14,11 @@
     overflow: hidden;
 }
 
-/* ========== APLICACIONES ========== */
-.use-info h2,
-.use-weights h2 {
-    opacity: 0;
-    transform: translateY(15px);
-}
-
-.panel-03.animate-in .use-info h2,
-.panel-03.animate-in .use-weights h2 {
-    animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
-}
-
+/** ---------- USE ---------- **/
 .use-list {
     list-style: none;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
 }
-
 .use-list li {
     position: relative;
     display: flex;
@@ -47,48 +34,59 @@
     transition: all 0.3s ease;
     cursor: default;
 }
-
-.panel-03.animate-in .use-list li:nth-child(1) { animation: fadeSlideIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both; }
+.panel-03.animate-in .use-list li:nth-child(1) { animation: fadeSlideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both; }
 .panel-03.animate-in .use-list li:nth-child(2) { animation: fadeSlideIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both; }
-.panel-03.animate-in .use-list li:nth-child(3) { animation: fadeSlideIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both; }
-.panel-03.animate-in .use-list li:nth-child(4) { animation: fadeSlideIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.55s both; }
-.panel-03.animate-in .use-list li:nth-child(5) { animation: fadeSlideIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.65s both; }
+.panel-03.animate-in .use-list li:nth-child(3) { animation: fadeSlideIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both; }
+.panel-03.animate-in .use-list li:nth-child(4) { animation: fadeSlideIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.55s both; }
+.panel-03.animate-in .use-list li:nth-child(5) { animation: fadeSlideIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.65s both; }
 
 .use-list li .num {
     font-family: 'Orbitron', sans-serif;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     color: var(--cyan);
     opacity: 0.7;
     min-width: 1.8rem;
 }
-
 .use-list li:hover {
     color: #ffffff;
     padding-left: 8px;
 }
-
 .use-list li:hover .num {
     color: var(--magenta);
     opacity: 1;
 }
 
-/* ========== PESOS (nueva estructura) ========== */
+@media (max-width: 700px) {
+    .use-info { 
+        justify-content: flex-end; 
+    }
+    .use-list { 
+        display: block; 
+        padding-right: 0.5rem; 
+    }
+    .use-list li { 
+        opacity: 1; 
+        transform: none; 
+        font-size: clamp(0.9rem, 4vw, 1.05rem); 
+    }
+}
+
+.use-info h2,
+.use-weights h2 {
+    opacity: 0;
+    transform: translateY(15px);
+}
+.panel-03.animate-in .use-info h2,
+.panel-03.animate-in .use-weights h2 {
+    animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+}
+
+/** ---------- WEIGHTS ---------- **/
 .weights-preview {
     opacity: 0;
     transform: translateY(20px);
+    text-align: center;
 }
-.panel-03.animate-in .weights-preview {
-    animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
-}
-
-.weight-name {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
-    color: var(--magenta);
-    margin-bottom: 0.4rem;
-}
-
 .weight-sample {
     font-family: 'Orbitron', sans-serif;
     font-size: clamp(2.2rem, 4vw, 3.2rem);
@@ -98,30 +96,22 @@
     transition: font-weight 0.25s ease;
     text-shadow: 0 0 20px rgba(0, 229, 255, 0.25);
 }
-
 .weights-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    opacity: 0;
+    display: grid; 
+    gap: 0.4em;
+    grid-template-columns: repeat(4, 1fr);
 }
-
-.panel-03.animate-in .weights-list {
-    animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
-}
-
 .weights-list button {
     border: 1px solid var(--border);
     padding: 0.4rem 0.9rem;
     font-family: 'Orbitron', sans-serif;
-    font-size: 0.72rem;
+    font-size: 0.8rem;
     letter-spacing: 0.08em;
     color: var(--muted);
     background: transparent;
     cursor: pointer;
     transition: all 0.25s ease;
 }
-
 .weights-list button:hover,
 .weights-list button.active {
     color: #ffffff;
@@ -129,9 +119,44 @@
     background: rgba(0, 229, 255, 0.08);
     box-shadow: 0 0 12px rgba(0, 229, 255, 0.2);
 }
+.panel-03.animate-in .weights-list {
+    animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
+}
+.panel-03.animate-in .weights-preview {
+    animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+}
+@media (max-width: 700px) {
+    .weights-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/** ---------- ADAPTACIÓN MÓVIL (GRID 3 SIN ACORDEONES) ---------- **/
+@media (max-width: 700px) {
+    .grid-3 {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        height: auto;
+        min-height: 100%;
+        gap: 1.5rem;
+    }
+    .grid-3 > .box {
+        padding: 1rem 0;
+        height: auto;
+        overflow: visible;
+    }
+    .cyberpunk-article { 
+        grid-column: auto; 
+        margin: 1rem 0;
+    }
+    .cyberpunk-article .article-content { 
+        padding-right: 0; 
+    }
+}
 
 /* ========== ARTÍCULO CYBERPUNK + TRAILER ========== */
 .cyberpunk-article {
+    margin: 2em;
     grid-column: 1 / -1;
     position: relative;
     overflow: hidden;
@@ -160,6 +185,7 @@
     position: relative;
     z-index: 3;
     max-width: 780px;
+    padding: 1.5rem;
 }
 
 .cyberpunk-article h2 {
@@ -205,9 +231,6 @@
     color: var(--muted);
 }
 
-
-
-
 /* Enlace de la serie */
 .series-link {
     color: var(--cyan);
@@ -217,7 +240,6 @@
     padding-bottom: 2px;
 }
 
-/* Línea subrayada animada */
 .series-link::after {
     content: '';
     position: absolute;
@@ -276,32 +298,8 @@
     pointer-events: none;
 }
 
-/* Solo aparece al hacer hover en la palabra */
 .series-link:hover ~ .mini-screen,
 .cyberpunk-article:has(.series-link:hover) .mini-screen {
     opacity: 1;
     transform: scale(1) translateY(0);
-}
-
-
-@media (max-width: 700px) {
-    .grid-3 {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    height: auto;
-    min-height: 100%;
-    padding: clamp(0.75rem, 3vw, 1.25rem) 0;
-    gap: 0.55rem;
-    }
-    .grid-3 > .box {
-        padding: clamp(1rem, 4vw, 1.5rem);
-        gap: 0.85rem;
-    }
-    .use-info { justify-content: flex-start; }
-    .use-list { display: block; padding-right: 0.5rem; }
-    .use-list li { opacity: 1; transform: none; font-size: clamp(0.9rem, 4vw, 1.05rem); }
-    .cyberpunk-article { grid-column: auto; }
-    .cyberpunk-article .article-content { padding-right: 0.5rem; }
-    .cyberpunk-article .article-content.is-open { padding-bottom: 0.35rem; }
-    .mini-screen { display: none; }
 }

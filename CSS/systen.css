@@ -112,7 +112,7 @@ h1:hover {
 }
 h2 {
     font-family: 'Orbitron', sans-serif;
-    font-size: clamp(0.6rem, 2.2vw, 1.4rem);
+    font-size: clamp(0.8rem, 2.2vw, 1.4rem);
     font-weight: 400;
     letter-spacing: 0.06em;
     color: var(--text);
@@ -341,4 +341,184 @@ nav h3 span {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 700px) {
+    /* 1. Forzamos el contenedor principal a ocupar exactamente el ancho y alto del dispositivo sin desbordes */
+    .panels {
+        display: grid;
+        grid-template-columns: auto 1fr auto; 
+        grid-template-rows: 100vh;
+        width: 100vw;
+        height: 100vh;
+        max-height: 100vh;
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        box-sizing: border-box;
+    }
+
+    /* 2. Header izquierdo estricto y anclado al borde izquierdo */
+    header {
+        grid-column: 1 / 2;
+        grid-row: 1;
+        display: flex;
+        align-items: center;
+        z-index: 50;
+        padding: 1rem 0.2rem;
+        box-sizing: border-box;
+        position: sticky;
+        left: 0;
+    }
+
+    header h3 {
+        writing-mode: sideways-lr;
+        border-left: 1px solid transparent;
+        border-bottom: none;
+    }
+
+    /* 3. Panel central con scroll vertical aislado y ancho fluido */
+    .panel {
+        grid-column: 2 / 3;
+        grid-row: 1;
+        width: 100%;
+        height: 100vh;
+        overflow-y: auto;
+        overflow-x: hidden; /* Evita cualquier desplazamiento horizontal interno */
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+        padding: 1.5rem 0.8rem 5rem 0.8rem; 
+        background: transparent;
+        z-index: 10;
+        box-sizing: border-box;
+    }
+
+    /* 4. Footer derecho estricto y anclado al borde derecho */
+    footer {
+        grid-column: 3 / 4;
+        grid-row: 1;
+        height: 100vh;
+        padding: 1rem 0.2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        text-align: right;
+        z-index: 50;
+        box-sizing: border-box;
+        position: sticky;
+        right: 0;
+    }
+
+    footer h3 {
+        writing-mode: sideways-rl;
+        padding-top: 0;
+    }
+
+    nav {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* 5. Asegurar que los grids internos nunca superen el ancho del panel central */
+    .grid-2, .grid-3 {
+        display: flex !important;
+        flex-direction: column !important;
+        grid-template-columns: none !important;
+        grid-template-rows: none !important;
+        height: auto !important;
+        min-height: 100% !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        gap: 1.5rem !important;
+        padding-bottom: 2rem;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    /* Elementos internos adaptados al ancho exacto */
+    .grid-2 > div, 
+    .grid-3 > .box,
+    .historia, 
+    .caracteristicas, 
+    .specimen,
+    .cyberpunk-article {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        grid-row: auto !important;
+        grid-column: auto !important;
+        padding: 1rem !important;
+        margin: 0 !important;
+        box-sizing: border-box;
+        overflow-y: visible !important;
+        writing-mode: horizontal-tb !important;
+        transform: none !important;
+    }
+
+    .caracteristicas-list {
+        writing-mode: horizontal-tb !important;
+        opacity: 1;
+        transform: none;
+    }
+
+    .timeline { 
+        gap: 1rem; 
+        padding-right: 0; 
+    }
+    
+    .timeline-item { 
+        opacity: 1; 
+        transform: none; 
+    }
+
+    .abc2.keyboard { 
+        grid-template-columns: repeat(6, 1fr); 
+    }
+
+    .abc2.keyboard button { 
+        min-height: 2.2rem; 
+        padding: 0.35rem; 
+    }
+
+    .abc2.keyboard button::after { 
+        display: none; 
+    }
+
+    .use-list { 
+        display: block; 
+        padding-right: 0; 
+    }
+    
+    .use-list li { 
+        opacity: 1; 
+        transform: none; 
+        font-size: 0.95rem; 
+    }
+
+    .weights-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }

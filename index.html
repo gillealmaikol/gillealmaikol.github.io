@@ -24,7 +24,7 @@
                 <div class="nav-arrows">
                 <button class="nav-arrow nav-prev" aria-label="Anterior" disabled>
                         <span>&lt;</span>
-                    </button>
+                    </button> <br>
                     <button class="nav-arrow nav-next" aria-label="Siguiente">
                         <span>&gt;</span>
                     </button>
@@ -51,7 +51,6 @@
                 <div>
                     <h2>ORBITRON <span>HISTORIA</span></h2>
                 </div>
-                <button class="accordion-toggle" type="button" aria-expanded="false" aria-controls="orbitron-timeline" data-accordion-target="orbitron-timeline">CRONOLOGÍA <span aria-hidden="true">+</span></button>
                 <div class="timeline accordion-content" id="orbitron-timeline">
                     <div class="timeline-item">
                         <h3><span>2008</span><br> EL COMIENZO</h3>
@@ -90,7 +89,6 @@
                 </div>
             </div>
 
-            <button class="accordion-toggle features-toggle" type="button" aria-expanded="false" aria-controls="orbitron-features" data-accordion-target="orbitron-features">ESPECIFICACIONES <span aria-hidden="true">+</span></button>
 
 <div class="specimen">
     <div class="abc2 keyboard" id="keyboard">
@@ -107,16 +105,15 @@
 
 <!-- PANEL 03 — USE -->
 <section class="panel panel-03" data-panel="3">
-    <div class="grid-3">
+<div class="grid-3">
 
         <!-- Aplicaciones -->
-            <div class="box use-info">
+        <div class="box use-info">
             <div>
                 <h2>APLICACIONES</h2>
                 <h4>DÓNDE BRILLA</h4>
             </div>
-            <button class="accordion-toggle" type="button" aria-expanded="false" aria-controls="use-cases" data-accordion-target="use-cases">VER APLICACIONES <span aria-hidden="true">+</span></button>
-            <ul class="use-list accordion-content" id="use-cases">
+            <ul class="use-list">
                 <li><span class="num">01</span> Títulos de películas y videojuegos sci-fi</li>
                 <li><span class="num">02</span> Interfaces de usuario futuristas</li>
                 <li><span class="num">03</span> Identidad de marcas tecnológicas</li>
@@ -124,52 +121,53 @@
             </ul>
         </div>
 
-        <!-- Pesos (nueva estructura) -->
+        <!-- Pesos -->
         <div class="box use-weights">
-
+            <div>
+                <h2>CARACTERISTIC</h2>
+                <h4>STYLE</h4>
+            </div>
             <div class="weights-preview">
-                <div class="weight-name" id="current-weight">Bold</div>
                 <div class="weight-sample" id="weight-sample">ORBITRON</div>
             </div>
-
             <div class="weights-list">
-                <button data-weight="300" data-name="Light">Light</button>
-                <button data-weight="500" data-name="Medium">Medium</button>
-                <button data-weight="700" data-name="Bold" class="active">Bold</button>
-                <button data-weight="900" data-name="Black">Black</button>
-                <button data-weight="variable" data-name="Variable">Variable</button>
+                <button data-weight="300" data-name="Light" class="active">LIGHT</button>
+                <button data-weight="500" data-name="Medium">MEDIUM</button>
+                <button data-weight="700" data-name="Bold">BOLD</button>
+                <button data-weight="900" data-name="Black">BLACK</button>
             </div>
         </div>
 
-<div class="box cyberpunk-article">
-    <button class="accordion-toggle" type="button" aria-expanded="false" aria-controls="cyberpunk-context" data-accordion-target="cyberpunk-context">ABRIR ARCHIVO <span aria-hidden="true">+</span></button>
-<div class="article-content accordion-content" id="cyberpunk-context">
-    <h2>¿QUÉ SIGNIFICA «CYBERPUNK»?</h2>
-    <p>
-        Nació en los años 80 como un subgénero de la ciencia ficción. 
-        Une «cyber» (tecnología y redes) con «punk» (rebeldía y marginalidad). 
-        Imagina un futuro cercano donde la alta tecnología convive con la decadencia, 
-        las corporaciones y la desigualdad.
-    </p>
+        <!-- Artículo Cyberpunk -->
+        <div class="box cyberpunk-article">
+            <div>
+                <h2>¿QUÉ SIGNIFICA «CYBERPUNK»?</h2>
+            </div>
+            <div class="article-content" id="cyberpunk-context">
+                <p>
+                    Nació en los años 80 como un subgénero de la ciencia ficción. 
+                    Une «cyber» (tecnología y redes) con «punk» (rebeldía y marginalidad). 
+                    Imagina un futuro cercano donde la alta tecnología convive con la decadencia, 
+                    las corporaciones y la desigualdad.
+                </p>
 
-    <p>
-        Visualmente es neon, lluvia, implantes y ciudades nocturnas. 
-        Orbitron captura esa tensión: geometría limpia y tecnológica, 
-        pero con el alma de un futuro que nunca llegó del todo. 
-        Series como <span class="series-link">Cyberpunk: Edgerunners</span> 
-        lo devolvieron a la cultura popular.
-    </p>
-</div>
+                <p>
+                    Visualmente es neon, lluvia, implantes y ciudades nocturnas. 
+                    Orbitron captura esa tensión: geometría limpia y tecnológica, 
+                    pero con el alma de un futuro que nunca llegó del todo. 
+                    Series como <span class="series-link">Cyberpunk: Edgerunners</span> 
+                    lo devolvieron a la cultura popular.
+                </p>
+            </div>
 
-    <!-- Aquí va el video (mini pantalla) -->
-    <div class="mini-screen">
-        <video muted loop playsinline>
-            <source src="/PROYECTS/Cyberpunk/cyberpunk.mp4" type="video/mp4">
-        </video>
-        <div class="mini-screen-frame"></div>
-    </div>
-
-</div>
+            <!-- Mini pantalla (video) -->
+            <div class="mini-screen">
+                <video muted loop playsinline>
+                    <source src="" type="video/mp4">
+                </video>
+                <div class="mini-screen-frame"></div>
+            </div>
+        </div>
 
     </div>
 </section>
