@@ -8,16 +8,20 @@
 }
 .grid-3 > .box {
     padding: 4em;
-    display: flex;
+    display: flex; gap: 1em;
     flex-direction: column;
     justify-content: space-between;
     overflow: hidden;
 }
+@media (max-width: 700px) {
+    .grid-3 > .box {
+        padding: 1em;
+    }
 
+}
 /** ---------- USE ---------- **/
 .use-list {
     list-style: none;
-    margin-top: 1rem;
 }
 .use-list li {
     position: relative;
@@ -56,20 +60,6 @@
     opacity: 1;
 }
 
-@media (max-width: 700px) {
-    .use-info { 
-        justify-content: flex-end; 
-    }
-    .use-list { 
-        display: block; 
-        padding-right: 0.5rem; 
-    }
-    .use-list li { 
-        opacity: 1; 
-        transform: none; 
-        font-size: clamp(0.9rem, 4vw, 1.05rem); 
-    }
-}
 
 .use-info h2,
 .use-weights h2 {
@@ -131,32 +121,10 @@
     }
 }
 
-/** ---------- ADAPTACIÓN MÓVIL (GRID 3 SIN ACORDEONES) ---------- **/
-@media (max-width: 700px) {
-    .grid-3 {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
-        height: auto;
-        min-height: 100%;
-        gap: 1.5rem;
-    }
-    .grid-3 > .box {
-        padding: 1rem 0;
-        height: auto;
-        overflow: visible;
-    }
-    .cyberpunk-article { 
-        grid-column: auto; 
-        margin: 1rem 0;
-    }
-    .cyberpunk-article .article-content { 
-        padding-right: 0; 
-    }
-}
+
 
 /* ========== ARTÍCULO CYBERPUNK + TRAILER ========== */
 .cyberpunk-article {
-    margin: 2em;
     grid-column: 1 / -1;
     position: relative;
     overflow: hidden;
@@ -165,11 +133,9 @@
     opacity: 0;
     transform: translateY(25px);
 }
-
 .panel-03.animate-in .cyberpunk-article {
     animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
 }
-
 .cyberpunk-article::before {
     content: '';
     position: absolute;
@@ -180,31 +146,24 @@
     background: var(--magenta);
     z-index: 2;
 }
-
 .article-content {
     position: relative;
     z-index: 3;
     max-width: 780px;
-    padding: 1.5rem;
 }
-
 .cyberpunk-article h2 {
     color: var(--magenta);
     text-shadow: 0 0 18px rgba(255, 42, 109, 0.45);
     margin-bottom: 0.3rem;
 }
-
 .cyberpunk-article h4 {
     color: var(--muted);
     margin-bottom: 1.2rem;
 }
-
 .cyberpunk-article p {
     margin-top: 1em;
     max-width: 500px;
 }
-
-/* Recomendación */
 .recommendation {
     margin-top: 1.8rem;
     padding-top: 1.2rem;
@@ -213,24 +172,20 @@
     flex-direction: column;
     gap: 0.25rem;
 }
-
 .rec-label {
     font-family: 'Orbitron', sans-serif;
     font-size: 0.65rem;
     letter-spacing: 0.15em;
     color: var(--cyan);
 }
-
 .recommendation strong {
     font-size: 1.05rem;
     color: #ffffff;
 }
-
 .rec-sub {
     font-size: 0.8rem;
     color: var(--muted);
 }
-
 /* Enlace de la serie */
 .series-link {
     color: var(--cyan);
@@ -239,7 +194,6 @@
     transition: color 0.3s ease;
     padding-bottom: 2px;
 }
-
 .series-link::after {
     content: '';
     position: absolute;
@@ -252,16 +206,13 @@
     transform-origin: left;
     transition: background 0.3s ease, box-shadow 0.3s ease;
 }
-
 .series-link:hover {
     color: #ffffff;
 }
-
 .series-link:hover::after {
     background: var(--magenta);
     box-shadow: 0 0 8px rgba(255, 42, 109, 0.6);
 }
-
 .mini-screen {
     position: absolute;
     width: 320px;
@@ -276,18 +227,15 @@
     pointer-events: none;
     z-index: 30;
 }
-
 .mini-screen.visible {
     opacity: 1;
     transform: scale(1) translateY(0);
 }
-
 .mini-screen video {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-
 .mini-screen-frame {
     position: absolute;
     inset: 0;
@@ -297,7 +245,6 @@
         inset 0 0 25px rgba(0, 0, 0, 0.45);
     pointer-events: none;
 }
-
 .series-link:hover ~ .mini-screen,
 .cyberpunk-article:has(.series-link:hover) .mini-screen {
     opacity: 1;
